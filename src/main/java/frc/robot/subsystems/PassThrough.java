@@ -6,13 +6,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * A subsystem to contorol the indexer/pass-through
  */
 public class PassThrough extends SubsystemBase {
-    /**
-     * Creates a new PassThrough.
-     */
-    public PassThrough(int passThroughPort) {
-        
+  private WPI_TalonSRX passThroughMotor;        
+  
+  /**
+   * Creates a new PassThrough.
+   */
+  public PassThrough(int passThrough_p) {
 
-    }
+  }
 
   @Override
   public void periodic() {

@@ -9,6 +9,9 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    /** 
+     * Define the CAN ID for motors and such here. Makes it a little easier to manage
+     */
     public static final int left1_p = 0;
     public static final int left2_p = 1;
     public static final int left3_p = 2;
@@ -26,4 +29,10 @@ public final class Constants {
     
     public static final int climber_p = 12;
     public static final int climberPosition_p = 13;
+
+    /**
+     * This variable says whether we're running unit tests or not.
+     * Setting it to true will make all of the subsystems use "fake" motors and stuff.
+     */
+    public static final Boolean unitTests = false;
 }

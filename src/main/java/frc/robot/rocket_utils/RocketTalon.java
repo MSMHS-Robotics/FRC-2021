@@ -23,7 +23,13 @@ public class RocketTalon {
             this.power = power;
         }
         else {
-            motor.set(power)
+            if (motor != null) {
+                motor.set(power)
+            }
         }
+    }
+
+    public Boolean isMotorNotNull() {
+        return motor != null
     }
 }

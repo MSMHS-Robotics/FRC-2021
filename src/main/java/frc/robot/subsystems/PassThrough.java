@@ -12,13 +12,30 @@ public class PassThrough extends SubsystemBase {
   
   /**
    * Creates a new PassThrough.
+   * @param passThrough_p the CAN ID/port of the pass-through motor. This should be specified in Constants.java
    */
   public PassThrough(int passThrough_p) {
     passThroughMotor = new RocketTalon(passThrough_p, Constants.unitTests);
   }
 
+  /**
+   * Sets the pass-through to a given speed
+   * @param power the speed at which you want the pass-through to run (negative means reverse)
+   */
+  public void setPassThrough(int power) {
+    passThroughMotor.set(power); // != null is handled inside RocketUtils
+  }
+
+  /**
+   * the required isGood() method
+   * here we only have one motor so it's pretty easy
+   * @return a Boolean representing if the motor can be reached or not
+   */
+  public Boolean isGood() {
+    return passThroughMotor.isMotorNotNull(); // RocketUtils at work
+  }
+
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
   }
 }

@@ -8,14 +8,18 @@ import frc.robot.Constants;
  * A subsystem to contorol the indexer/pass-through
  */
 public class PassThrough extends SubsystemBase {
-  private RocketTalon passThroughMotor;
+  private Object passThroughMotor;
   
   /**
    * Creates a new PassThrough.
    * @param passThrough_p the CAN ID/port of the pass-through motor. This should be specified in Constants.java
    */
   public PassThrough(int passThrough_p) {
-    passThroughMotor = new RocketTalon(passThrough_p, Constants.unitTests);
+    if (Constants.unitTests) {
+      passThroughMotor = new RocketTalon_T(passThrough_p);
+    } else {
+      passThroughMotor = new RocketTalon(passThrough_p);
+    }
   }
 
   /**

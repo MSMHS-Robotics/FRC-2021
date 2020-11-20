@@ -1,35 +1,14 @@
 package frc.robot.rocket_utils;
 
+import edu.wpi.first.wpiutil.math.MathUtil;
+
 public class RocketTalon {
-    /** private stuff? */
-    private Boolean unitTests;
     private WPI_TalonSRX motor;
 
-    /** Public so we can read while testing */
-    public int power;
-
     /** Creates a new RocketTalon
-     *  If unitTests is false then this behaves _exactly_ like a normal Talon
-     *  Otherwise it just implements something that looks like a Talon but doesn't actaully do anything.
-     *  This allows us to run it in the virtual
+     *  pretty much just a regular WPI_TalonSRX, except has a few extras to make life _easier_
      */
-    public RocketTalon(int port, boolean unitTests) {
+    public RocketTalon(int port) {
         motor = new WPI_TalonSRX(port);
-    }
-
-    @Override
-    public void set(int power) {
-        if (unitTests) {
-            this.power = power;
-        }
-        else {
-            if (motor != null) {
-                motor.set(power)
-            }
-        }
-    }
-
-    public Boolean isMotorNotNull() {
-        return motor != null
     }
 }

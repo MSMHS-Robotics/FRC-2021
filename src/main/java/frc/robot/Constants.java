@@ -35,6 +35,14 @@ public final class Constants {
     public static final int climberPosition_p = 13;
 
     /**
+     * Define the PWM port numbers for sensors and such here. Makes it a little easier to manage
+     */
+    public static final int leftEncoder1_p = 2;
+    public static final int leftEncoder2_p = 3;
+    public static final int rightEncoder1_p = 4;
+    public static final int rightEncoder2_p = 5;
+
+    /**
      * This variable says whether we're running unit tests or not.
      * Setting it to true will make all of the subsystems use "fake" motors and stuff.
      */

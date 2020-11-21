@@ -18,6 +18,14 @@ public class RocketTalon {
         }
     }
 
+    public double get() {
+        if (motor != null) {
+            return motor.get();
+        } else {
+            return 0.0;
+        }
+    }
+
     public boolean isMotorNotNull() {
         return motor != null;
     }

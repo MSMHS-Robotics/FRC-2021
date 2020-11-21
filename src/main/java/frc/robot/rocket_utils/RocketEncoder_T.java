@@ -12,4 +12,8 @@ public class RocketEncoder_T {
     public void reset() {
         this.ticks = 0;
     }
+
+    public void get() {
+        return ticks;
+    }
 }

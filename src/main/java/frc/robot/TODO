@@ -3,3 +3,10 @@ Todo (1):
  * create turntoheadingcommand
  * update RocketCANEncoder and RocketEncoder to use getPosition() instead of get()
  * set the scale factor of the CANEncoders
+ * document rocketCANencoder
+ * document rocketEncoder
+ * document rocketTalon
+ * document rocketTalon_T
+ * document rocketSparkMAX
+ * document rocketSparkMAX_T
+ * document RocketGyro

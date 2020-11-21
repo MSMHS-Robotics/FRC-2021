@@ -11,4 +11,8 @@ public class RocketCANEncoder_T {
     public void reset() {
         this.ticks = 0;
     }
+
+    public double getPosition() {
+        return ticks;
+    }
 }

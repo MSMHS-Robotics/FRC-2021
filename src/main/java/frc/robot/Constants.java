@@ -47,4 +47,18 @@ public final class Constants {
      * Setting it to true will make all of the subsystems use "fake" motors and stuff.
      */
     public static final Boolean unitTests = false;
+
+    /** A class to hold the constants of the turning PID */
+    public static final class turningPID {
+        public static final double kP = 0.15;
+        public static final double kI = 0;
+        public static final double kD = 0;
+    }
+
+    /** A class to hold the constants of the distance PID */
+    public static final class distancePID {
+        public static final double kP = 1;
+        public static final double kI = 0;
+        public static final double kD = 0;
+    }
 }

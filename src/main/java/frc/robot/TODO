@@ -1,0 +1,5 @@
+Todo (1):
+ * create driveDistanceCommand
+ * create turntoheadingcommand
+ * update RocketCANEncoder and RocketEncoder to use getPosition() instead of get()
+ * set the scale factor of the CANEncoders

@@ -21,11 +21,20 @@ public class Drivetrain extends SubsystemBase {
     private Object leftEncoder;
     private Object rightEncoder;
 
+    private Object left1Encoder;
+    private Object left2Encoder;
+    private Object left3Encoder;
+    private Object right1Encoder;
+    private Object right2Encoder;
+    private Object right3Encoder;
+
+
     private SpeedControllerGroup leftSide;
     private SpeedControllerGroup rightSide;
     private DifferentialDrive drivetrain;
     
-    private PIDController headingPID;
+    private PIDController turningPID;
+    private PIDController distancePID;
 
     /**
      * Creates a new drivetrain subsystem, which is kinda necesary to move
@@ -35,6 +44,10 @@ public class Drivetrain extends SubsystemBase {
      * @param right1_p the port for the 1st right motor
      * @param right2_p the port for the 2nd right motor
      * @param right3_p the port for the 3rd right motor
+     * @param leftEncoder1_p the 1st port for the left through-bore encoder
+     * @param leftEncoder2_p the 2nd port for the left though-bore encoder
+     * @param rightEncoder1_p the 1st port for the right though-bore encoder
+     * @param rightEncoder2_p the 2nd port for the right though-bore encoder
      */
     public Drivetrain(int left1_p, int left2_pm int left3_p, int right1_p, int right2_p, int right3_p, int leftEncoder1_p, int leftEncoder2_p, int rightEncoder1_p, int rightEncoder2_p) {
         if (Constants.unitTests) {
@@ -49,6 +62,13 @@ public class Drivetrain extends SubsystemBase {
 
             leftEncoder = new RocketEncoder_T(leftEncoder1_p, leftEncoder2_p); // or what the heck these'll do
             rightEncoder = new RocketEncoder_T(rightEncoder1_p, rightEncoder2_p);
+
+            left1Encoder = new RocketCANEncoder_T(left1); // _this_ part can only end in misery and suffering
+            left2Encoder = new RocketCANEncoder_T(left2); // and utter destruction and pain and hate and ...
+            left3Encoder = new RocketCANEncoder_T(left3);
+            right1Encoder = new RocketCANEncoder_T(right1);
+            right2Encoder = new RocketCANEncoder_T(right2);
+            right3Encoder = new RocketCANEncoder_T(right3);
         } else {
             left1 = new RocketSparkMAX(left1_p);
             left2 = new RocketSparkMAX(left2_p);
@@ -61,6 +81,13 @@ public class Drivetrain extends SubsystemBase {
 
             leftEncoder = new Encoder(leftEncoder1_p, leftEncoder2_p);
             rightEncoder = new Encoder(rightEncoder1_p, rightEncoder2_p);
+
+            left1Encoder = new CANEncoder(left1);
+            left2Encoder = new CANEncoder(left2);
+            left3Encoder = new CANEncoder(left3);
+            right1Encoder = new CANEncoder(right1);
+            right2Encoder = new CANEncoder(right2);
+            right3Encoder = new CANEncoder(right3);
         }
 
         leftSide = new SpeedControllerGroup(left1, left2, left3); // this _should_ work because RocketSparkMAX implements SpeedController
@@ -68,6 +95,7 @@ public class Drivetrain extends SubsystemBase {
         diffDrive = new DifferentialDrive(leftSide, rightSide);
 
         turningPID = new PIDController(Constants.turningPID.kP, Constants.turningPID.kI, Constants.turningPID.kD);
+        distancePID = new PIDController(Constants.distancePID.kP, Constants.distancePID.kI, Constants.distancePID.kD);
     }
 
     /**
@@ -90,10 +118,28 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
+     * drives the robot to a given distance on a given heading
+     * @param distance the distance, in ticks, you want to go
+     * @param lastHeading the last taken heading before starting the command, so you drive straight
+     * @return a bool representing whether we're there yet or not
+     */
+    public boolean driveDistance(double distance, double lastHeading) {
+        diffDrive.arcadeDrive(distancePID.calculate(getEncoderAverage(), distance), turningPID.calculate(gyro.getYaw(), lastHeading));
+        return distancePID.atSetpoint();
+    }
+
+    /**
      * Reset the turningPID for some reason
      */
     public void turningPIDReset() {
         turningPID.reset();
+    }
+
+    /**
+     * A function to reset the distancePID
+     */
+    public void distancePIDReset() {
+        distancePID.reset();
     }
 
     /**
@@ -117,7 +163,18 @@ public class Drivetrain extends SubsystemBase {
     public void hardReset() {
         resetEncoders();
         turningPIDReset();
+        distancePIDReset();
         resetGyro();
+    }
+
+    /**
+     * A method/function/whatever to get an average of all of the encoder readings
+     * @return an average of all of the encoder readins on the drivetrain
+     */
+    public double getEncoderAverage() {
+        double leftSide = (left1Encoder.getPosition() + left2Encoder.getPosition() + left3Encoder.getPosition() + leftEncoder.get()) / 4;
+        double rightSide = (right1Encoder.getPosition() + right2Encoder.getPosition() + right3Encoder.getPosition() + rightEncoder.get()) / 4;
+        return (leftSide + rightSide) / 2;
     }
 
     /**

@@ -66,6 +66,15 @@ public class Intake extends SubsystemBase {
         return motor.get();
     }
 
+    /**
+     * the required isGood() method
+     * checks to see if both motors exist
+     * @return if the subsystem is functioning ("good") or not
+     */
+    public Boolean isGood() {
+        return motor.isMotorNotNull() && positionMotor.isMotorNotNull();
+    }
+
     @Override
     public void periodic() {
     }

@@ -84,7 +84,7 @@ public class Drivetrain extends SubsystemBase {
      * @param angle the angle you want to turn to (relative to robot starting orientation)
      * @return a boolean representing if the robot has reached the angle or not
      */
-    public boolean turnToHeading(double angle) {
+    public boolean turnToAngle(double angle) {
         diffDrive.arcadeDrive(0, headingPID.calculate(gyro.getYaw(), angle));
         return turningPID.atSetpoint();
     }
@@ -105,11 +105,30 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
+     * a function to reset the gyro, for use by commands
+     */
+    public void resetGyro() {
+        gyro.reset();
+    }
+
+    /**
+     * A function that resets pretty much everything. Probably best practice to run this before a match
+     */
+    public void hardReset() {
+        resetEncoders();
+        turningPIDReset();
+        resetGyro();
+    }
+
+    /**
      * the required isGood() method
+     * Checks all motors to see if they exist
      * @return if the subsystem is functioning ("good") or not
      */
     public Boolean isGood() {
-        return true;
+        boolean leftSideGood = left1.isMotorNotNull() && left2.isMotorNotNull() && left3.isMotorNotNull();
+        boolean rightSideGood = right1.isMotorNotNull() && right1.isMotorNotNull() && right1.isMotorNotNull();
+        return leftSideGood && rightSideGood;
     }
 
     @Override

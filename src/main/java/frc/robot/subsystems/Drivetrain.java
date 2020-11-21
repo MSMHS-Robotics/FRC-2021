@@ -16,10 +16,19 @@ public class Drivetrain extends SubsystemBase {
     private Object right2;
     private Object right3;
 
-    private SpeedControllerGroup leftSide = new SpeedControllerGroup(left1, left2, left3);
-    private SpeedControllerGroup rightSide = new SpeedControllerGroup(right1, right2, right3);
-    private DifferentialDrive drivetrain = new DifferentialDrive(leftSide, rightSide);
+    private SpeedControllerGroup leftSide;
+    private SpeedControllerGroup rightSide;
+    private DifferentialDrive drivetrain;
     
+    /**
+     * Creates a new drivetrain subsystem, which is kinda necesary to move
+     * @param left1_p the port for the 1st left motor
+     * @param left2_p the port for the 2nd left motor
+     * @param left3_p the port for the 3rd left motor
+     * @param right1_p the port for the 1st right motor
+     * @param right2_p the port for the 2nd right motor
+     * @param right3_p the port for the 3rd right motor
+     */
     public Drivetrain(int left1_p, int left2_pm int left3_p, int right1_p, int right2_p, int right3_p) {
         if (Constants.unitTests) {
             left1 = new RocketSparkMAX_T(left1_p);
@@ -36,9 +45,20 @@ public class Drivetrain extends SubsystemBase {
             right2 = new RocketSparkMAX(right2_p);
             right3 = new RocketSparkMAX(right3_p);
         }
+
+        leftSide = new SpeedControllerGroup(left1, left2, left3); // this _should_ work because RocketSparkMAX implements SpeedController
+        rightSide = new SpeedControllerGroup(right1, right2, right3);
+        diffDrive = new DifferentialDrive(leftSide, rightSide);
     }
 
-    public void drive()
+    /**
+     * The actual function that drives us. This is a tank-drive configuration
+     * @param leftStickY the Y value of the left joystick
+     * @param rightStickY the Y value of the right joystick
+     */
+    public void drive(double leftStickY, double rightStickY) {
+        diffDrive.tankDrive(leftStickY, rightStickY, true); // "true" to square inputs in the diff drive
+    }
 
     /**
      * the required isGood() method

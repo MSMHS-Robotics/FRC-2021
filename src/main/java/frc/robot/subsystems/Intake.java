@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.rocket_utils.RocketTalon_T;
 import frc.robot.rocket_utils.RocketPotentiometer_T;
@@ -15,7 +16,7 @@ import frc.robot.Constants;
 public class Intake extends SubsystemBase {
     private SpeedController motor;
     private SpeedController positionMotor;
-    private Object positionPot;
+    private Potentiometer positionPot;
 
     private PIDController intakePositionPID;
 

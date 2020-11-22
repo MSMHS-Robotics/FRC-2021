@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -48,7 +49,7 @@ public class Drivetrain extends SubsystemBase {
     private PIDController distancePID;
 
     /**
-     * Creates a new drivetrain subsystem, which is kinda necesary to move
+     * Creates a new drivetrain subsystem, which is kinda needed to move
      * @param left1_p the port for the 1st left motor
      * @param left2_p the port for the 2nd left motor
      * @param left3_p the port for the 3rd left motor
@@ -74,12 +75,12 @@ public class Drivetrain extends SubsystemBase {
             leftEncoder = new RocketEncoder_T(leftEncoder1_p, leftEncoder2_p); // or what the heck these'll do
             rightEncoder = new RocketEncoder_T(rightEncoder1_p, rightEncoder2_p);
 
-            left1Encoder = new RocketCANEncoder_T(left1); // _this_ part can only end in misery and suffering
-            left2Encoder = new RocketCANEncoder_T(left2); // and utter destruction and pain and hate and ...
-            left3Encoder = new RocketCANEncoder_T(left3);
-            right1Encoder = new RocketCANEncoder_T(right1);
-            right2Encoder = new RocketCANEncoder_T(right2);
-            right3Encoder = new RocketCANEncoder_T(right3);
+            left1Encoder = new RocketCANEncoder_T((RocketSparkMAX_T) left1); // _this_ part can only end in misery and suffering
+            left2Encoder = new RocketCANEncoder_T((RocketSparkMAX_T) left2); // and utter destruction and pain and hate and ...
+            left3Encoder = new RocketCANEncoder_T((RocketSparkMAX_T) left3);
+            right1Encoder = new RocketCANEncoder_T((RocketSparkMAX_T) right1);
+            right2Encoder = new RocketCANEncoder_T((RocketSparkMAX_T) right2);
+            right3Encoder = new RocketCANEncoder_T((RocketSparkMAX_T) right3);
         } else {
             left1 = new RocketSparkMAX(left1_p);
             left2 = new RocketSparkMAX(left2_p);
@@ -93,12 +94,12 @@ public class Drivetrain extends SubsystemBase {
             leftEncoder = new Encoder(leftEncoder1_p, leftEncoder2_p);
             rightEncoder = new Encoder(rightEncoder1_p, rightEncoder2_p);
 
-            left1Encoder = new CANEncoder(left1);
-            left2Encoder = new CANEncoder(left2);
-            left3Encoder = new CANEncoder(left3);
-            right1Encoder = new CANEncoder(right1);
-            right2Encoder = new CANEncoder(right2);
-            right3Encoder = new CANEncoder(right3);
+            left1Encoder = new CANEncoder((CANSparkMax) left1);
+            left2Encoder = new CANEncoder((CANSparkMax) left2);
+            left3Encoder = new CANEncoder((CANSparkMax) left3);
+            right1Encoder = new CANEncoder((CANSparkMax) right1);
+            right2Encoder = new CANEncoder((CANSparkMax) right2);
+            right3Encoder = new CANEncoder((CANSparkMax) right3);
         }
 
         left1Encoder.setPositionConversionFactor(Constants.canEncoderScaleFactor);

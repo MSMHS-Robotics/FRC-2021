@@ -6,7 +6,7 @@ import frc.robot.rocket_utils.RocketSparkMAX_T;
 import frc.robot.Constants;
 
 /**
- * A subsystem to contorol the shooter + trigger
+ * A subsystem to control the shooter + trigger
  */
 public class Shooter extends SubsystemBase {
     private Object shooterMotor;
@@ -50,10 +50,14 @@ public class Shooter extends SubsystemBase {
 
     /**
      * Resets the shooter encoders and control-y bits
+     * Also sets all motors to 0
      */
     public void reset() {
         shooterEncoder.setPosition(0);
         shooterPID.reset();
+        shooterMotor.set(0);
+        shooterFollowerMotor.set(0);
+        triggerMotor.set(0);
     }
 
     /**
@@ -64,6 +68,15 @@ public class Shooter extends SubsystemBase {
     public boolean warmUp(double RPM) {
         shooterMotor.set(shooterPID.calculate(shooterEncoder.getVelocity(), RPM));
         return shooterPID.atSetpoint();
+    }
+
+    /**
+     * the required isGood() method
+     * Checks all motors to see if they exist
+     * @return if the subsystem is functioning ("good") or not
+     */
+    public boolean isGood() {
+        return shooterMotor.isMotorNotNull() && shooterFollowerMotor.isMotorNotNull() && triggerMotor.isMotorNotNull();
     }
 
     @Override

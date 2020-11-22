@@ -1,12 +1,11 @@
 Todo (1):
- * create driveDistanceCommand
- * create turntoheadingcommand
  * make it so that this builds
  * spell-check all files
  * flesh out Vision.java
  * make a drive off line auto
  * make the climber subsystem
  * find a way to implement following in RocketSparkMAX_T
- * make RocketCANEncoder_T have a getVelocity() method
- * make the reset() funcs of all the subsystems set all motors to 0
- * add an isGood() to shooter
+ * make checking the name of the joystick using DriverStation.getJoystickName or getJoystickType() to check to make sure the gamepads are in the right mode (d/x)
+ * make intakeRaise() and lower() functions actually do stuff
+ * add a ticksPerRev_MAX to constants
+ * make it so you put distances in inches instead of ticks (add some kind of internal conversion)

@@ -67,6 +67,15 @@ public class Intake extends SubsystemBase {
     }
 
     /**
+     * Resets everything of the intake
+     * In this case all it does is set both motors to 0
+     */
+    public void reset() {
+        motor.set(0);
+        positionMotor.set(0);
+    }
+
+    /**
      * the required isGood() method
      * checks to see if both motors exist
      * @return if the subsystem is functioning ("good") or not

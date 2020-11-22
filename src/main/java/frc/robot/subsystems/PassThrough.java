@@ -31,6 +31,13 @@ public class PassThrough extends SubsystemBase {
   }
 
   /**
+   * Resets the pass-through subsystem to its pre-start state
+   */
+  public void reset() {
+    passThroughMotor.set(0);
+  }
+
+  /**
    * the required isGood() method
    * here we only have one motor so it's pretty easy
    * @return a Boolean representing if the motor can be reached or not

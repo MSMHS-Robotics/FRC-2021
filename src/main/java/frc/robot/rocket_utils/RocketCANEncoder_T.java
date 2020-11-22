@@ -4,6 +4,8 @@ package frc.robot.rocket_utils;
 public class RocketCANEncoder_T {
     private RocketSparkMAX_T motor;
     private double ticks = 0;
+    private double lastTime = 0;
+    private HardwareTimer timer;
 
     /**
      * Creates a new RocketCANEncoder
@@ -11,6 +13,7 @@ public class RocketCANEncoder_T {
      */
     public RocketCANEncoder_T(RocketSparkMAX_T motor) {
         this.motor = motor;
+        timer = new HardwareTimer();
     }
 
     /**
@@ -19,7 +22,13 @@ public class RocketCANEncoder_T {
      * @param ticks the number you want the tick count to be
      */
     public void setPosition(double ticks) {
-        this.ticks = ticks
+        this.ticks = ticks;
+    }
+
+    public double getVelocity() {
+        double ticksSinceLast = ticks / (timer.getFPGATimestamp() - lastTime);
+        lastTime = timer.getFPGATimestamp();
+        return ticksSinceLast / Constants.ticksPerRev_MAX;
     }
 
     /** 

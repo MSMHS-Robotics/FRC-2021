@@ -174,12 +174,14 @@ public class Drivetrain extends SubsystemBase {
 
     /**
      * A function that resets pretty much everything. Probably best practice to run this before a match
+     * Also sets all motors to 0
      */
     public void hardReset() {
         resetEncoders();
         turningPIDReset();
         distancePIDReset();
         resetGyro();
+        drive(0, 0);
     }
 
     /**
@@ -190,6 +192,14 @@ public class Drivetrain extends SubsystemBase {
         double leftSide = (left1Encoder.getPosition() + left2Encoder.getPosition() + left3Encoder.getPosition() + leftEncoder.get()) / 4;
         double rightSide = (right1Encoder.getPosition() + right2Encoder.getPosition() + right3Encoder.getPosition() + rightEncoder.get()) / 4;
         return (leftSide + rightSide) / 2;
+    }
+
+    /**
+     * A method to get the heading the robot is pointing at
+     * @return the current heading
+     */
+    public double getHeading() {
+        return gyro.getYaw();
     }
 
     /**

@@ -1,5 +1,6 @@
 package frc.robot.rocket_utils;
 
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
 
 /** A class to simulate a CANEncoder */
@@ -9,7 +10,7 @@ public class RocketCANEncoder_T {
     private double lastTime = 0;
     private double lastTicks = 0;
     private double scaleFactor = 1;
-    private HardwareTimer timer;
+    private Timer timer;
 
     /**
      * Creates a new RocketCANEncoder
@@ -17,7 +18,7 @@ public class RocketCANEncoder_T {
      */
     public RocketCANEncoder_T(RocketSparkMAX_T motor) {
         this.motor = motor;
-        timer = new HardwareTimer();
+        timer = new Timer();
     }
 
     /**

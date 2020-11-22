@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANEncoder;
 
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.rocket_utils.RocketCANEncoder_T;
@@ -13,9 +14,9 @@ import frc.robot.Constants;
  * A subsystem to control the shooter + trigger
  */
 public class Shooter extends SubsystemBase {
-    private Object shooterMotor;
-    private Object shooterFollowerMotor;
-    private Object triggerMotor;
+    private SpeedController shooterMotor;
+    private SpeedController shooterFollowerMotor;
+    private SpeedController triggerMotor;
     private Object shooterEncoder;
 
     private PIDController shooterPID;

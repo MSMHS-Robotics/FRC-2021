@@ -4,6 +4,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANEncoder;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -19,12 +20,12 @@ import frc.robot.Constants;
  * A subsystem to control the drivetrain
  */
 public class Drivetrain extends SubsystemBase {
-    private Object left1;
-    private Object left2;
-    private Object left3;
-    private Object right1;
-    private Object right2;
-    private Object right3;
+    private SpeedController left1;
+    private SpeedController left2;
+    private SpeedController left3;
+    private SpeedController right1;
+    private SpeedController right2;
+    private SpeedController right3;
 
     private Object gyro;
 

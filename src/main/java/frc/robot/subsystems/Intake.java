@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.rocket_utils.RocketTalon_T;
@@ -12,8 +13,8 @@ import frc.robot.Constants;
  * A subsystem to control the intake
  */
 public class Intake extends SubsystemBase {
-    private Object motor;
-    private Object positionMotor;
+    private SpeedController motor;
+    private SpeedController positionMotor;
     private Object positionPot;
 
     private PIDController intakePositionPID;

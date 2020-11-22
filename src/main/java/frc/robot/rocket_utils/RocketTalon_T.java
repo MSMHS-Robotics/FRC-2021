@@ -1,51 +1,106 @@
 package frc.robot.rocket_utils;
 
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpiutil.math.MathUtil;
 
-public class RocketTalon_T {
+public class RocketTalon_T implements SpeedController {
     /** Public so we can read while testing */
     private double power = 0;
     private int port;
+    private boolean inverted = false;
 
     /**
-     * Creates a new RocketTalon implements something that looks like a Talon but
-     * doesn't actaully do anything. This allows us to run it in the virtual
+     * Creates a new RocketTalon_T. implements something that looks like a
+     * TalonSRX but doesn't actaully do anything. This allows us to run it in the
+     * virtual
      */
     public RocketTalon_T(int port) {
         this.port = port;
     }
 
-    /** 
-     * Sets the motor to a given power
-     * @param power the speed you want the motor to run at
+    /**
+     * Sets the motor to run at a certain speed
+     * 
+     * @param power the speed you want to run the motor at
      */
+    @Override
     public void set(double power) {
         this.power = MathUtil.clamp(power, -1.0, 1.0);
+        if (inverted) {
+            this.power *= -1;
+        }
     }
 
     /**
-     * Gets the last set speed of the motor
-     * @return the speed the motor is set at
+     * Returns the last speed the motor was set at
+     * 
+     * @return the last power the motor was set to
      */
+    @Override
     public double get() {
         return power;
     }
 
     /**
-     * Gets the port number passed in the constructor of this class
-     * Useful for debugging/unit tests to verify no two motors have been assigned the same CAN ID
-     * @return the port number of the motor
+     * sets whether the motor is inverted or not. This is useful when running a
+     * drivetrain, because forwards for the left would be backwards for the right
+     * because the motors are facing opposite directions
+     * 
+     * @param isInverted whether the motor is inverted, true being inverted
+     */
+    @Override
+    public void setInverted(boolean isInverted) {
+        inverted = isInverted;
+    }
+
+    /**
+     * returns whether the motor is inverted or not
+     * 
+     * @return if the motor is inverted or not
+     */
+    @Override
+    public boolean getInverted() {
+        return inverted;
+    }
+
+    /**
+     * Not really sure what this is supposed to do but we have to implement it
+     * because of implementing the SpeedController interface
+     */
+    @Override
+    public void disable() {
+        power = 0;
+    }
+
+    /**
+     * stops the motor, hence the name
+     */
+    @Override
+    public void stopMotor() {
+        power = 0;
+    }
+
+    /**
+     * Returns the port that was passed to the constructor This should be checked
+     * against Constants.java in unit tests to make sure they match
      */
     public int getPort() {
         return port;
     }
 
     /**
-     * Returns whether the motor is null or not
-     * Seeing as the point of this class is to prevent NullPointerExceptions at every turn,
-     * we need some way to know if the CAN wires have come unplugged
+     * Returns whether the motor is *not* null
+     * This is useful since we're suppressing null warnings in the other RocketSparkMAX class
+     * And still want to know (in a less crash-and-burn-y way) if the motor is unplugged or not
+     * @return whether the motor exists or not
      */
     public boolean isMotorNotNull() {
         return true;
+    }
+
+    /** Ignore this, necessary to not get an error */
+    @Override
+    public void pidWrite(double output) {
+        // TODO fix later
     }
 }

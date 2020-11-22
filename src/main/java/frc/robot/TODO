@@ -7,3 +7,4 @@ Todo (1):
  * find a way to implement following in RocketSparkMAX_T
  * make checking the name of the joystick using DriverStation.getJoystickName or getJoystickType() to check to make sure the gamepads are in the right mode (d/x)
  * make it so you put distances in inches instead of ticks (add some kind of internal conversion)
+ * update all RocketMotors to implement SpeedController

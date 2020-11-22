@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.rocket_utils.RocketTalon;
 import frc.robot.rocket_utils.RocketTalon_T;
@@ -9,7 +10,7 @@ import frc.robot.Constants;
  * A subsystem to control the indexer/pass-through
  */
 public class PassThrough extends SubsystemBase {
-  private Object passThroughMotor;
+  private SpeedController passThroughMotor;
   
   /**
    * Creates a new PassThrough.

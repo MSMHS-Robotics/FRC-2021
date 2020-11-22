@@ -6,7 +6,8 @@ public class RocketGyro_T {
     public RocketGyro_T() {
     }
 
-    /** Gets the current heading/angle
+    /**
+     * Gets the current heading/angle
      * ABSOLUTELY no idea how this is going to work in simulation
      * @return the current rotation around the Z axis
      */

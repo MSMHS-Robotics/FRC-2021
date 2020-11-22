@@ -1,7 +1,9 @@
 Todo (1):
  * create driveDistanceCommand
  * create turntoheadingcommand
- * set the scale factor of the CANEncoders
-
+ * make it so that this builds
  * spell-check all files
- * make all javadoc comments consistent (1 \n before words)
+ * make a shooter subsystem
+ * flesh out Vision.java
+ * make a drive off line auto
+ * make the climber subsystem

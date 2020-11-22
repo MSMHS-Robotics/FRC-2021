@@ -7,7 +7,8 @@ public class RocketTalon {
     private double power = 0;
     private int port;
 
-    /** Creates a new RocketTalon
+    /** 
+     * Creates a new RocketTalon
      *  implements something that looks like a Talon but doesn't actaully do anything.
      *  This allows us to run it in the virtual
      */

@@ -43,6 +43,11 @@ public final class Constants {
     public static final int rightEncoder2_p = 5;
 
     /**
+     * Define the scale factor for the CANEncoders
+     */
+    public static final double encoderScaleFactor = 1.0;
+
+    /**
      * This variable says whether we're running unit tests or not.
      * Setting it to true will make all of the subsystems use "fake" motors and stuff.
      */

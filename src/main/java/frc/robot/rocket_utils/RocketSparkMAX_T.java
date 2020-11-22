@@ -8,7 +8,8 @@ public class RocketSparkMAX_T implements SpeedController {
     private int port;
     private boolean inverted = false;
 
-    /** Creates a new RocketSparkMAX_T
+    /** 
+     * Creates a new RocketSparkMAX_T
      *  implements something that looks like a SparkMAX but doesn't actaully do anything.
      *  This allows us to run it in the virtual
      */

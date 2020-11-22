@@ -90,6 +90,14 @@ public class Drivetrain extends SubsystemBase {
             right3Encoder = new CANEncoder(right3);
         }
 
+        left1Encoder.setPositionConversionFactor(Constants.encoderScaleFactor);
+        left2Encoder.setPositionConversionFactor(Constants.encoderScaleFactor);
+        left3Encoder.setPositionConversionFactor(Constants.encoderScaleFactor);
+        right1Encoder.setPositionConversionFactor(Constants.encoderScaleFactor);
+        right2Encoder.setPositionConversionFactor(Constants.encoderScaleFactor);
+        right3Encoder.setPositionConversionFactor(Constants.encoderScaleFactor);
+
+
         leftSide = new SpeedControllerGroup(left1, left2, left3); // this _should_ work because RocketSparkMAX implements SpeedController
         rightSide = new SpeedControllerGroup(right1, right2, right3);
         diffDrive = new DifferentialDrive(leftSide, rightSide);
@@ -148,6 +156,13 @@ public class Drivetrain extends SubsystemBase {
     public void resetEncoders() {
         leftEncoder.reset();
         rightEncoder.reset();
+
+        left1Encoder.setPosition(0);
+        left2Encoder.setPosition(0);
+        left3Encoder.setPosition(0);
+        right1Encoder.setPosition(0);
+        right2Encoder.setPosition(0);
+        right3Encoder.setPosition(0);
     }
 
     /**

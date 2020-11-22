@@ -5,16 +5,18 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 public class RocketSparkMAX implements SpeedController {
     private CANSparkMAX motor;
 
-    /** Creates a new RocketSparkMAX
-     *  pretty much just a regular CANSparkMAX, except has a few extras to make better
-     *  The main thing it has are the null checks at every turn so we don't have to clutter our main code
-     *  with them and so we don't get yelled at a lot by the DS when a CAN cable gets unplugged
+    /** 
+     * Creates a new RocketSparkMAX
+     * pretty much just a regular CANSparkMAX, except has a few extras to make better
+     * The main thing it has are the null checks at every turn so we don't have to clutter our main code
+     * with them and so we don't get yelled at a lot by the DS when a CAN cable gets unplugged
      */
     public RocketSparkMAX(int port) {
         motor = new CANSparkMAX(port, MotorType.kBrushless);
     }
 
-    /** Sets the motor to the given power
+    /**
+     * Sets the motor to the given power
      * @return the speed you want to run the motor at
      */
     @Override
@@ -24,7 +26,8 @@ public class RocketSparkMAX implements SpeedController {
         }
     }
 
-    /** Gets the last set power of the motor
+    /**
+     * Gets the last set power of the motor
      * @return the current speed the motor is set at
      */
     @Override
@@ -36,7 +39,8 @@ public class RocketSparkMAX implements SpeedController {
         }
     }
 
-    /** sets whether the motor is inverted or not
+    /**
+     * sets whether the motor is inverted or not
      * This is equivalent to multiplying all subsequent calls to set() by -1
      * @param isInverted whether the motor should be inverted or not, true being inverted
      */
@@ -47,7 +51,8 @@ public class RocketSparkMAX implements SpeedController {
         }
     }
 
-    /** Gets whether the motor has been set to be inverted or not
+    /**
+     * Gets whether the motor has been set to be inverted or not
      * True means it has been
      * @return a boolean indicating whether the motor is inverted or not
      */
@@ -76,7 +81,8 @@ public class RocketSparkMAX implements SpeedController {
         }
     }
 
-    /** Gets the motor instance being used by this class
+    /**
+     * Gets the motor instance being used by this class
      * This might or might not be needed for the CANEncoders to work
      * @return the CANSparkMAX instance used by this class
      */

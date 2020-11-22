@@ -13,12 +13,17 @@ public class RocketCANEncoder_T {
         this.motor = motor;
     }
 
-    /** Resets the encoder's ticks to 0 */
-    public void reset() {
-        this.ticks = 0;
+    /**
+     * Sets the internal tick count to the given tick value
+     * setting it to 0 is pretty much equivalent to resetting it (which the CANEncoders don't have as a method)
+     * @param ticks the number you want the tick count to be
+     */
+    public void setPosition(double ticks) {
+        this.ticks = ticks
     }
 
-    /** Gets the current tick count
+    /** 
+     * Gets the current tick count
      * @return the current tick count
      */
     public double getPosition() {

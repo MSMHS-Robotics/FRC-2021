@@ -5,7 +5,8 @@ public class RocketEncoder_T {
     private int port1, port2;
     private double ticks = 0;
     
-    /** Creates a new RocketEncoder
+    /** 
+     * Creates a new RocketEncoder
      * Has two ports because we are simulating WPI's Encoder (of the quadrature variety)
      * @param port1 the port of the (imaginary) 1st wire
      * @param port2 the port of the 2nd wire
@@ -20,7 +21,8 @@ public class RocketEncoder_T {
         this.ticks = 0;
     }
 
-    /** Gets the current tick count
+    /** 
+     * Gets the current tick count
      * @return the encoder's current tick count
      */
     public void get() {

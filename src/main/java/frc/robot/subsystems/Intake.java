@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.rocket_utils.RocketTalon_T;
+import frc.robot.rocket_utils.RocketMotor;
 import frc.robot.rocket_utils.RocketPotentiometer_T;
 import frc.robot.rocket_utils.RocketTalon;
 import frc.robot.Constants;
@@ -14,8 +15,8 @@ import frc.robot.Constants;
  * A subsystem to control the intake
  */
 public class Intake extends SubsystemBase {
-    private SpeedController motor;
-    private SpeedController positionMotor;
+    private RocketMotor motor;
+    private RocketMotor positionMotor;
     private Potentiometer positionPot;
 
     private PIDController intakePositionPID;
@@ -58,10 +59,15 @@ public class Intake extends SubsystemBase {
 
     /**
      * returns whether or not the intake is raised
+     * checks the PID to see if we're there or not
      * @return if the intake is raised or not
      */
     public Boolean isIntakeRaised() {
-        //TODO add sensor stuff here
+        if (intakePositionPID.atSetpoint() && intakePositionPID.getSetpoint() == Constants.intake.intakeRaisedSetpoint) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

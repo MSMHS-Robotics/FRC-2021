@@ -48,7 +48,7 @@ public final class Constants {
      */
     public static final double canEncoderScaleFactor = 1.0;
     public static final double encoderScaleFactor = 1.0;
-    public static final double neoTicksPerRev = 100;
+    public static final double neoTicksPerRev = 42;
     public static final double wheelDiameter = 4.0;
 
     /**

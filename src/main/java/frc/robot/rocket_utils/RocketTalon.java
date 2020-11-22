@@ -2,9 +2,7 @@ package frc.robot.rocket_utils;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.SpeedController;
-
-public class RocketTalon implements SpeedController {
+public class RocketTalon implements RocketMotor {
     private WPI_TalonSRX motor;
 
     /**

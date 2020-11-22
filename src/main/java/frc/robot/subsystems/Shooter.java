@@ -1,11 +1,13 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.rocket_utils.RocketCANEncoder_T;
+import frc.robot.rocket_utils.RocketMotor;
 import frc.robot.rocket_utils.RocketSparkMAX;
 import frc.robot.rocket_utils.RocketSparkMAX_T;
 import frc.robot.Constants;
@@ -14,18 +16,19 @@ import frc.robot.Constants;
  * A subsystem to control the shooter + trigger
  */
 public class Shooter extends SubsystemBase {
-    private SpeedController shooterMotor;
-    private SpeedController shooterFollowerMotor;
-    private SpeedController triggerMotor;
+    private RocketMotor shooterMotor;
+    private RocketMotor shooterFollowerMotor;
+    private RocketMotor triggerMotor;
     private Object shooterEncoder;
 
     private PIDController shooterPID;
 
     /**
      * Creates a new Shooter
+     * 
      * @param shooter1_p the port for the first shooter motor
      * @param shooter2_p the port for the second/follower shooter motor
-     * @param trigger_p the port for the trigger motor
+     * @param trigger_p  the port for the trigger motor
      */
     public Shooter(int shooter1_p, int shooter2_p, int trigger_p) {
         if (Constants.unitTests) {
@@ -33,13 +36,13 @@ public class Shooter extends SubsystemBase {
             shooterFollowerMotor = new RocketSparkMAX_T(shooter2_p);
             triggerMotor = new RocketSparkMAX_T(trigger_p);
 
-            shooterEncoder = new RocketCANEncoder_T(shooterMotor);
+            shooterEncoder = new RocketCANEncoder_T((RocketSparkMAX_T) shooterMotor);
         } else {
             shooterMotor = new RocketSparkMAX(shooter1_p);
             shooterFollowerMotor = new RocketSparkMAX(shooter2_p);
             triggerMotor = new RocketSparkMAX(trigger_p);
 
-            shooterEncoder = new CANEncoder(shooterMotor);
+            shooterEncoder = new CANEncoder((CANSparkMax) shooterMotor);
         }
 
         shooterPID = new PIDController(Constants.shooterPID.kP, Constants.shooterPID.kI, Constants.shooterPID.kD, Constants.shooterPID.kFF);

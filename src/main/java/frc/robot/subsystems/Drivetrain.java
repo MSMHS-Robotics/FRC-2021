@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.rocket_utils.RocketCANEncoder_T;
 import frc.robot.rocket_utils.RocketEncoder_T;
 import frc.robot.rocket_utils.RocketGyro_T;
+import frc.robot.rocket_utils.RocketMotor;
 import frc.robot.rocket_utils.RocketSparkMAX;
 import frc.robot.rocket_utils.RocketSparkMAX_T;
 import frc.robot.Constants;
@@ -23,12 +24,12 @@ import frc.robot.Constants;
  * A subsystem to control the drivetrain
  */
 public class Drivetrain extends SubsystemBase {
-    private SpeedController left1;
-    private SpeedController left2;
-    private SpeedController left3;
-    private SpeedController right1;
-    private SpeedController right2;
-    private SpeedController right3;
+    private RocketMotor left1;
+    private RocketMotor left2;
+    private RocketMotor left3;
+    private RocketMotor right1;
+    private RocketMotor right2;
+    private RocketMotor right3;
 
     private Gyro gyro;
 

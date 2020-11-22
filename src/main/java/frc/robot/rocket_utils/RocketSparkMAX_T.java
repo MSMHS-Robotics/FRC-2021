@@ -1,9 +1,8 @@
 package frc.robot.rocket_utils;
 
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpiutil.math.MathUtil;
 
-public class RocketSparkMAX_T implements SpeedController {
+public class RocketSparkMAX_T implements RocketMotor {
     /** Public so we can read while testing */
     private double power = 0;
     private int port;

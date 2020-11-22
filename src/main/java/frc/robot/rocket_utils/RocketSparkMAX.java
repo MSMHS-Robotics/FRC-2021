@@ -3,9 +3,7 @@ package frc.robot.rocket_utils;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.SpeedController;
-
-public class RocketSparkMAX implements SpeedController {
+public class RocketSparkMAX implements RocketMotor {
     private CANSparkMax motor;
 
     /** 

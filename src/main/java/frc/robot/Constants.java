@@ -66,4 +66,12 @@ public final class Constants {
         public static final double kI = 0;
         public static final double kD = 0;
     }
+
+    /** A class to hold the constants of the shooter PID */
+    public static final class shooterPID {
+        public static final double kP = 0.00007;
+        public static final double kI = 0.0000002;
+        public static final double kD = 0.001;
+        public static final double kFF = 0.000006;
+    }
 }

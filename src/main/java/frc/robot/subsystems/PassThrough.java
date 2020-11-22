@@ -5,7 +5,7 @@ import frc.robot.rocket_utils.RocketTalon;
 import frc.robot.Constants;
 
 /**
- * A subsystem to contorol the indexer/pass-through
+ * A subsystem to control the indexer/pass-through
  */
 public class PassThrough extends SubsystemBase {
   private Object passThroughMotor;

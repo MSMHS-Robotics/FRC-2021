@@ -3,7 +3,10 @@ Todo (1):
  * create turntoheadingcommand
  * make it so that this builds
  * spell-check all files
- * make a shooter subsystem
  * flesh out Vision.java
  * make a drive off line auto
  * make the climber subsystem
+ * find a way to implement following in RocketSparkMAX_T
+ * make RocketCANEncoder_T have a getVelocity() method
+ * make the reset() funcs of all the subsystems set all motors to 0
+ * add an isGood() to shooter

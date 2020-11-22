@@ -84,26 +84,6 @@ public class RocketSparkMAX implements SpeedController {
     }
 
     /**
-     * Gets the motor instance being used by this class
-     * This might or might not be needed for the CANEncoders to work
-     * @return the CANSparkMAX instance used by this class
-     */
-    public CANSparkMax getMotorInstance() {
-        return motor;
-    }
-
-    /**
-     * Causes this motor to mirror the outpout of the one passed to this method
-     * @param motor the motor instance you want to follow
-     * @param invert whether or not to invert the motor
-     */
-    public void follow(RocketSparkMAX motor, boolean invert) {
-        if (motor != null && this.motor != null) {
-            this.motor.follow(motor.getMotorInstance(), invert);
-        }
-    }
-
-    /**
      * Returns whether the motor is null or not
      * Seeing as the point of this class is to prevent NullPointerExceptions at every turn,
      * we need some way to know if the CAN wires have come unplugged

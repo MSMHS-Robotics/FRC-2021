@@ -43,7 +43,7 @@ public class Shooter extends SubsystemBase {
         }
 
         shooterPID = new PIDController(Constants.shooterPID.kP, Constants.shooterPID.kI, Constants.shooterPID.kD, Constants.shooterPID.kFF);
-        shooterFollowerMotor.follow(shooterMotor, true); // this _hopefully_ doesn't break/fail miserably
+        shooterFollowerMotor.setInverted(true);
     }
 
     /**
@@ -73,6 +73,7 @@ public class Shooter extends SubsystemBase {
      */
     public boolean warmUp(double RPM) {
         shooterMotor.set(shooterPID.calculate(shooterEncoder.getVelocity(), RPM));
+        shooterFollowerMotor.set(shooterPID.calculate(shooterEncoder.getVelocity(), RPM));
         return shooterPID.atSetpoint();
     }
 

@@ -85,15 +85,6 @@ public class RocketSparkMAX_T implements SpeedController {
     }
 
     /**
-     * Causes this motor to mirror the outpout of the one passed to this method
-     * @param motor the motor instance you want to follow
-     * @param invert whether or not to invert the motor
-     */
-    public void follow(RocketSparkMAX_T motor, boolean invert) {
-        // not really sure how to implement this
-    }
-
-    /**
      * Returns whether the motor is *not* null
      * This is useful since we're suppressing null warnings in the other RocketSparkMAX class
      * And still want to know (in a less crash-and-burn-y way) if the motor is unplugged or not

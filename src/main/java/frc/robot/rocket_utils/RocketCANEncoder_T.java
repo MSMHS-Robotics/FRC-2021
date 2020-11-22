@@ -5,6 +5,8 @@ public class RocketCANEncoder_T {
     private RocketSparkMAX_T motor;
     private double ticks = 0;
     private double lastTime = 0;
+    private double lastTicks = 0;
+    private double scaleFactor = 1;
     private HardwareTimer timer;
 
     /**
@@ -23,12 +25,28 @@ public class RocketCANEncoder_T {
      */
     public void setPosition(double ticks) {
         this.ticks = ticks;
+        this.lastTicks = ticks;
     }
 
+    /**
+     * gets the velocity in RPM
+     * divides tick count minus tick count last time this was called by time minus
+     * the time when this was called last. Then devides _that_ by ticks per rev of the NEO encoder
+     * @return the current velocity in RPMs
+     */
     public double getVelocity() {
-        double ticksSinceLast = ticks / (timer.getFPGATimestamp() - lastTime);
+        double ticksSinceLast = (ticks - lastTicks) / (timer.getFPGATimestamp() - lastTime);
+        lastTicks = ticks;
         lastTime = timer.getFPGATimestamp();
-        return ticksSinceLast / Constants.ticksPerRev_MAX;
+        return ticksSinceLast / Constants.neoTicksPerRev;
+    }
+
+    /**
+     * Sets the scale factor used by getPosition() to return ticks
+     * @param factor the value you want the scale factor set to
+     */
+    public void setPositionConversionFactor(double factor) {
+        scaleFactor = factor;
     }
 
     /** 
@@ -36,6 +54,6 @@ public class RocketCANEncoder_T {
      * @return the current tick count
      */
     public double getPosition() {
-        return ticks;
+        return ticks * scaleFactor;
     }
 }

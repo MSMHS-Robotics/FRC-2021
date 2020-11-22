@@ -10,36 +10,44 @@ import frc.robot.Constants;
 public class Intake extends SubsystemBase {
     private Object motor;
     private Object positionMotor;
-    private Boolean intakeRaised = true;
+    private Object positionPot;
+    
+    private PIDController intakePositionPID;
+
 
     /**
      * Creates a new Intake
      * The intake controls the intake-y parts (position and intake/outake)
      * @param intake_p the intake motor port
      * @param intakePosition_p the intake position motor port
+     * @param intakePositionPot_p the analog port for the potentiometer attached to the intake
      */
-    public Intake(int intake_p, int intakePosition_p) {
+    public Intake(int intake_p, int intakePosition_p, int intakePositionPot_p) {
         if (Constants.unitTests) {
             motor = new RocketTalon_T(intake_p);
             positionMotor = new RocketTalon_T(intakePosition_p);
+            positionPot = new RocketPotentiometer(intakePositionPot_p, Constants.intake.fullRange, Constants.intake.offset);
         } else {
             motor = new RocketTalon(intake_p);
             positionMotor = new RocketTalon(intakePosition_p);
+            positionPot = new AnalogPotentiometer(intakePositionPot_p, Constants.intake.fullRange, Constants.intake.offset);
         }
+
+        intakePositionPID = new PIDController(Constants.intake.kP, Constants.intake.kI, Constants.intake.kD);
     }
 
     /**
-     * lowers the intake
+     * Sets the setpoint of the intake pid to be lowered
      */
     public void lowerIntake() {
-        intakeRaised = false;
+        intakePositionPID.setSetpoint(Constants.intakeLoweredSetpoint);
     }
 
     /**
-     * raises the intake
+     * Sets the setpoint of the intake pid to be raised
      */
     public void raiseIntake() {
-        intakeRaised = true;
+        intakePositionPID.setSetpoint(Constants.intakeRaisedSetpoint);
     }
 
     /**
@@ -47,7 +55,6 @@ public class Intake extends SubsystemBase {
      * @return if the intake is raised or not
      */
     public Boolean isIntakeRaised() {
-        return intakeRaised;
     }
 
     /**
@@ -84,7 +91,9 @@ public class Intake extends SubsystemBase {
         return motor.isMotorNotNull() && positionMotor.isMotorNotNull();
     }
 
+    /** Sets the intake motor to PID to either raised or lowered and keep it there */
     @Override
     public void periodic() {
+        positionMotor.set(intakePositionPID.calculate(positionPot.get()));
     }
 }

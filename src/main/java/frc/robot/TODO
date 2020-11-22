@@ -6,6 +6,4 @@ Todo (1):
  * make the climber subsystem
  * find a way to implement following in RocketSparkMAX_T
  * make checking the name of the joystick using DriverStation.getJoystickName or getJoystickType() to check to make sure the gamepads are in the right mode (d/x)
- * make intakeRaise() and lower() functions actually do stuff
- * add a ticksPerRev_MAX to constants
  * make it so you put distances in inches instead of ticks (add some kind of internal conversion)

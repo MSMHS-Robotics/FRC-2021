@@ -24,6 +24,7 @@ public final class Constants {
     public static final int intake_p = 6;
     public static final int intakePosition_p = 7;
     public static final int passThrough_p = 8;
+    public static final int intakePositionPot_p = 1; // should be an analog channel
     
     // shooter
     public static final int shooter1_p = 9;
@@ -45,7 +46,10 @@ public final class Constants {
     /**
      * Define the scale factor for the CANEncoders
      */
+    public static final double canEncoderScaleFactor = 1.0;
     public static final double encoderScaleFactor = 1.0;
+    public static final double neoTicksPerRev = 100;
+    public static final double wheelDiameter = 4.0;
 
     /**
      * This variable says whether we're running unit tests or not.
@@ -73,5 +77,14 @@ public final class Constants {
         public static final double kI = 0.0000002;
         public static final double kD = 0.001;
         public static final double kFF = 0.000006;
+    }
+
+    /** A class to hold the constants of some intake stuff */
+    public static final class intake {
+        public static final double kP = 1;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double fullRange = 100;
+        public static final double offset = 50;
     }
 }

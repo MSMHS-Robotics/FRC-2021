@@ -4,6 +4,7 @@ package frc.robot.rocket_utils;
 public class RocketEncoder_T {
     private int port1, port2;
     private double ticks = 0;
+    private double revsPerTick = 1;
     
     /** 
      * Creates a new RocketEncoder
@@ -19,6 +20,23 @@ public class RocketEncoder_T {
     /** Resets the encoder's tick count to 0 */
     public void reset() {
         this.ticks = 0;
+    }
+
+    /**
+     * Sets the distance traveled per pulse (aka revolutions per tick)
+     * this will most likely be a tiny jumbled decimal
+     * @param revsPerTick the number of revolutions per tick
+     */
+    public void setDistancePerPulse(double revsPerTick) {
+        this.revsPerTick = revsPerTick;
+    }
+
+    /**
+     * returns the distance (current tick count * revolutions per tick)
+     * @return a double representing the number of revolutions the encoder has completed
+     */
+    public double getDistance() {
+        return ticks * revsPerTick
     }
 
     /** 

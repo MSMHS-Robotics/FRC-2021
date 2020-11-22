@@ -90,12 +90,15 @@ public class Drivetrain extends SubsystemBase {
             right3Encoder = new CANEncoder(right3);
         }
 
-        left1Encoder.setPositionConversionFactor(Constants.encoderScaleFactor);
-        left2Encoder.setPositionConversionFactor(Constants.encoderScaleFactor);
-        left3Encoder.setPositionConversionFactor(Constants.encoderScaleFactor);
-        right1Encoder.setPositionConversionFactor(Constants.encoderScaleFactor);
-        right2Encoder.setPositionConversionFactor(Constants.encoderScaleFactor);
-        right3Encoder.setPositionConversionFactor(Constants.encoderScaleFactor);
+        left1Encoder.setPositionConversionFactor(Constants.canEncoderScaleFactor);
+        left2Encoder.setPositionConversionFactor(Constants.canEncoderScaleFactor);
+        left3Encoder.setPositionConversionFactor(Constants.canEncoderScaleFactor);
+        right1Encoder.setPositionConversionFactor(Constants.canEncoderScaleFactor);
+        right2Encoder.setPositionConversionFactor(Constants.canEncoderScaleFactor);
+        right3Encoder.setPositionConversionFactor(Constants.canEncoderScaleFactor);
+
+        leftEncoder.setDistancePerPulse(Constants.encoderScaleFactor);
+        rightEncoder.setDistancePerPulse(Constants.encoderScaleFactor);
 
 
         leftSide = new SpeedControllerGroup(left1, left2, left3); // this _should_ work because RocketSparkMAX implements SpeedController

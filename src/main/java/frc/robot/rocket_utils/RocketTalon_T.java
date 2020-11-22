@@ -2,17 +2,16 @@ package frc.robot.rocket_utils;
 
 import edu.wpi.first.wpiutil.math.MathUtil;
 
-public class RocketTalon {
+public class RocketTalon_T {
     /** Public so we can read while testing */
     private double power = 0;
     private int port;
 
-    /** 
-     * Creates a new RocketTalon
-     *  implements something that looks like a Talon but doesn't actaully do anything.
-     *  This allows us to run it in the virtual
+    /**
+     * Creates a new RocketTalon implements something that looks like a Talon but
+     * doesn't actaully do anything. This allows us to run it in the virtual
      */
-    public RocketTalon(int port) {
+    public RocketTalon_T(int port) {
         this.port = port;
     }
 

@@ -1,5 +1,6 @@
 package frc.robot.rocket_utils;
 
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpiutil.math.MathUtil;
 
 public class RocketSparkMAX_T implements SpeedController {
@@ -100,5 +101,11 @@ public class RocketSparkMAX_T implements SpeedController {
      */
     public boolean isMotorNotNull() {
         return true;
+    }
+
+    /** Ignore this, necessary to not get an error */
+    @Override
+    public void pidWrite(double output) {
+        // TODO fix later
     }
 }

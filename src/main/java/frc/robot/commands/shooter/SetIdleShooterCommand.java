@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
@@ -12,13 +12,13 @@ public class SetIdleShooterCommand extends CommandBase {
      * @param shooter an intake subsystem to be used by this command
      */
     public SetIdleShooterCommand(Shooter shooter) {
-        this.shooter = shooter
+        this.shooter = shooter;
         addRequirements(shooter);
     }
 
     @Override
     public void execute() {
-        shooter.setIdle();
+        shooter.setTrigger(-0.5);
     }
 
     @Override

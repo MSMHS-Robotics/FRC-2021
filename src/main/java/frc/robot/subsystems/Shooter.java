@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.rocket_utils.RocketCANEncoder_T;
 import frc.robot.rocket_utils.RocketSparkMAX;
 import frc.robot.rocket_utils.RocketSparkMAX_T;
 import frc.robot.Constants;

@@ -1,6 +1,13 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.rocket_utils.RocketCANEncoder_T;
+import frc.robot.rocket_utils.RocketEncoder_T;
+import frc.robot.rocket_utils.RocketGyro_T;
 import frc.robot.rocket_utils.RocketSparkMAX;
 import frc.robot.rocket_utils.RocketSparkMAX_T;
 import frc.robot.Constants;
@@ -31,7 +38,7 @@ public class Drivetrain extends SubsystemBase {
 
     private SpeedControllerGroup leftSide;
     private SpeedControllerGroup rightSide;
-    private DifferentialDrive drivetrain;
+    private DifferentialDrive diffDrive;
     
     private PIDController turningPID;
     private PIDController distancePID;
@@ -49,7 +56,7 @@ public class Drivetrain extends SubsystemBase {
      * @param rightEncoder1_p the 1st port for the right though-bore encoder
      * @param rightEncoder2_p the 2nd port for the right though-bore encoder
      */
-    public Drivetrain(int left1_p, int left2_pm int left3_p, int right1_p, int right2_p, int right3_p, int leftEncoder1_p, int leftEncoder2_p, int rightEncoder1_p, int rightEncoder2_p) {
+    public Drivetrain(int left1_p, int left2_p, int left3_p, int right1_p, int right2_p, int right3_p, int leftEncoder1_p, int leftEncoder2_p, int rightEncoder1_p, int rightEncoder2_p) {
         if (Constants.unitTests) {
             left1 = new RocketSparkMAX_T(left1_p);
             left2 = new RocketSparkMAX_T(left2_p);
@@ -124,7 +131,7 @@ public class Drivetrain extends SubsystemBase {
      * @return a boolean representing if the robot has reached the angle or not
      */
     public boolean turnToAngle(double angle) {
-        diffDrive.arcadeDrive(0, headingPID.calculate(gyro.getYaw(), angle));
+        diffDrive.arcadeDrive(0, turningPID.calculate(gyro.getYaw(), angle));
         return turningPID.atSetpoint();
     }
 

@@ -36,14 +36,14 @@ public class RocketEncoder_T {
      * @return a double representing the number of revolutions the encoder has completed
      */
     public double getDistance() {
-        return ticks * revsPerTick
+        return ticks * revsPerTick;
     }
 
     /** 
      * Gets the current tick count
      * @return the encoder's current tick count
      */
-    public void get() {
+    public double get() {
         return ticks;
     }
 }

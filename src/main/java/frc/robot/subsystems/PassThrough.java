@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.rocket_utils.RocketTalon;
+import frc.robot.rocket_utils.RocketTalon_T;
 import frc.robot.Constants;
 
 /**
@@ -26,7 +27,7 @@ public class PassThrough extends SubsystemBase {
    * Sets the pass-through to a given speed
    * @param power the speed at which you want the pass-through to run (negative means reverse)
    */
-  public void setPassThrough(int power) {
+  public void setPassThrough(double power) {
     passThroughMotor.set(power); // != null is handled inside RocketUtils
   }
 

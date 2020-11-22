@@ -1,6 +1,10 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.rocket_utils.RocketTalon_T;
+import frc.robot.rocket_utils.RocketPotentiometer_T;
 import frc.robot.rocket_utils.RocketTalon;
 import frc.robot.Constants;
 
@@ -11,22 +15,22 @@ public class Intake extends SubsystemBase {
     private Object motor;
     private Object positionMotor;
     private Object positionPot;
-    
+
     private PIDController intakePositionPID;
 
-
     /**
-     * Creates a new Intake
-     * The intake controls the intake-y parts (position and intake/outake)
-     * @param intake_p the intake motor port
-     * @param intakePosition_p the intake position motor port
+     * Creates a new Intake The intake controls the intake-y parts (position and
+     * intake/outake)
+     * 
+     * @param intake_p            the intake motor port
+     * @param intakePosition_p    the intake position motor port
      * @param intakePositionPot_p the analog port for the potentiometer attached to the intake
      */
     public Intake(int intake_p, int intakePosition_p, int intakePositionPot_p) {
         if (Constants.unitTests) {
             motor = new RocketTalon_T(intake_p);
             positionMotor = new RocketTalon_T(intakePosition_p);
-            positionPot = new RocketPotentiometer(intakePositionPot_p, Constants.intake.fullRange, Constants.intake.offset);
+            positionPot = new RocketPotentiometer_T(intakePositionPot_p, Constants.intake.fullRange, Constants.intake.offset);
         } else {
             motor = new RocketTalon(intake_p);
             positionMotor = new RocketTalon(intakePosition_p);
@@ -40,14 +44,14 @@ public class Intake extends SubsystemBase {
      * Sets the setpoint of the intake pid to be lowered
      */
     public void lowerIntake() {
-        intakePositionPID.setSetpoint(Constants.intakeLoweredSetpoint);
+        intakePositionPID.setSetpoint(Constants.intake.intakeLoweredSetpoint);
     }
 
     /**
      * Sets the setpoint of the intake pid to be raised
      */
     public void raiseIntake() {
-        intakePositionPID.setSetpoint(Constants.intakeRaisedSetpoint);
+        intakePositionPID.setSetpoint(Constants.intake.intakeRaisedSetpoint);
     }
 
     /**
@@ -55,6 +59,7 @@ public class Intake extends SubsystemBase {
      * @return if the intake is raised or not
      */
     public Boolean isIntakeRaised() {
+        //TODO add sensor stuff here
     }
 
     /**

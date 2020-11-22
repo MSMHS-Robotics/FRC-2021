@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.passthrough;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.PassThrough;
@@ -12,13 +12,13 @@ public class SetIdlePassThroughCommand extends CommandBase {
      * @param passThrough a pass-through subsystem to be used by this command
      */
     public SetIdlePassThroughCommand(PassThrough passThrough) {
-        this.passThrough = passThrough
+        this.passThrough = passThrough;
         addRequirements(passThrough);
     }
 
     @Override
     public void execute() {
-        passThrough.set(0.5);
+        passThrough.setPassThrough(0.5);
     }
 
     @Override

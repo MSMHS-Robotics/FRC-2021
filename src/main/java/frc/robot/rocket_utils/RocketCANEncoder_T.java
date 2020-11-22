@@ -1,5 +1,7 @@
 package frc.robot.rocket_utils;
 
+import frc.robot.Constants;
+
 /** A class to simulate a CANEncoder */
 public class RocketCANEncoder_T {
     private RocketSparkMAX_T motor;

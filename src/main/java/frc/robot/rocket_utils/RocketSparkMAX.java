@@ -1,5 +1,6 @@
 package frc.robot.rocket_utils;
 
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpiutil.math.MathUtil;
 
 public class RocketSparkMAX implements SpeedController {
@@ -56,8 +57,7 @@ public class RocketSparkMAX implements SpeedController {
      * True means it has been
      * @return a boolean indicating whether the motor is inverted or not
      */
-    @Override
-    public Boolean getInverted() {
+    public boolean getInverted() {
         if (motor != null) {
             return motor.getInverted();
         } else {
@@ -67,7 +67,7 @@ public class RocketSparkMAX implements SpeedController {
 
     /** Disables the motor. idk what this does */
     @Override
-    public void disbale() {
+    public void disable() {
         if (motor != null) {
             motor.disable();
         }

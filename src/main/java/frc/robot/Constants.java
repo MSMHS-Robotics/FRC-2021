@@ -86,5 +86,7 @@ public final class Constants {
         public static final double kD = 0;
         public static final double fullRange = 100;
         public static final double offset = 50;
+        public static final double intakeRaisedSetpoint = 5;
+        public static final double intakeLoweredSetpoint = 0;
     }
 }

@@ -4,11 +4,13 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 
+import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.rocket_utils.RocketCANEncoder_T;
 import frc.robot.rocket_utils.RocketEncoder_T;
@@ -28,10 +30,10 @@ public class Drivetrain extends SubsystemBase {
     private SpeedController right2;
     private SpeedController right3;
 
-    private Object gyro;
+    private Gyro gyro;
 
-    private Object leftEncoder;
-    private Object rightEncoder;
+    private Encoder leftEncoder;
+    private Encoder rightEncoder;
 
     private Object left1Encoder;
     private Object left2Encoder;
@@ -89,7 +91,7 @@ public class Drivetrain extends SubsystemBase {
             right2 = new RocketSparkMAX(right2_p);
             right3 = new RocketSparkMAX(right3_p);
 
-            gyro = new AHRS(SPI.Port.kMXP); // this is one port that def won't change
+            gyro = new AHRS(Port.kMXP); // this is one port that def won't change
 
             leftEncoder = new Encoder(leftEncoder1_p, leftEncoder2_p);
             rightEncoder = new Encoder(rightEncoder1_p, rightEncoder2_p);
@@ -214,7 +216,7 @@ public class Drivetrain extends SubsystemBase {
      * @return the current heading
      */
     public double getHeading() {
-        return gyro.getYaw();
+        return gyro.getYaw(); // possibly change to getAngle() and then make sure to wrap to zero?
     }
 
     /**

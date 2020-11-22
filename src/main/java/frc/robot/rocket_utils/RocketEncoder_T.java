@@ -1,9 +1,11 @@
 package frc.robot.rocket_utils;
 
+import edu.wpi.first.wpilibj.Encoder;
+
 /** A class to simulate an Encoder */
-public class RocketEncoder_T {
+public class RocketEncoder_T extends Encoder {
     private int port1, port2;
-    private double ticks = 0;
+    private int ticks = 0;
     private double revsPerTick = 1;
     
     /** 
@@ -13,6 +15,7 @@ public class RocketEncoder_T {
      * @param port2 the port of the 2nd wire
      */
     public RocketEncoder_T(int port1, int port2) {
+        super(port1, port2);
         this.port1 = port1;
         this.port2 = port2;
     }
@@ -43,7 +46,7 @@ public class RocketEncoder_T {
      * Gets the current tick count
      * @return the encoder's current tick count
      */
-    public double get() {
+    public int get() {
         return ticks;
     }
 }

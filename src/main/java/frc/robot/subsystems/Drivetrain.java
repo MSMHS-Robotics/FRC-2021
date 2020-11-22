@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;

@@ -1,10 +1,12 @@
 package frc.robot.rocket_utils;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpiutil.math.MathUtil;
 
 public class RocketSparkMAX implements SpeedController {
-    private CANSparkMAX motor;
+    private CANSparkMax motor;
 
     /** 
      * Creates a new RocketSparkMAX
@@ -13,7 +15,7 @@ public class RocketSparkMAX implements SpeedController {
      * with them and so we don't get yelled at a lot by the DS when a CAN cable gets unplugged
      */
     public RocketSparkMAX(int port) {
-        motor = new CANSparkMAX(port, MotorType.kBrushless);
+        motor = new CANSparkMax(port, MotorType.kBrushless);
     }
 
     /**
@@ -86,7 +88,7 @@ public class RocketSparkMAX implements SpeedController {
      * This might or might not be needed for the CANEncoders to work
      * @return the CANSparkMAX instance used by this class
      */
-    public CANSparkMAX getMotorInstance() {
+    public CANSparkMax getMotorInstance() {
         return motor;
     }
 
@@ -108,5 +110,10 @@ public class RocketSparkMAX implements SpeedController {
      */
     public boolean isMotorNotNull() {
         return motor != null;
+    }
+
+    @Override
+    public void pidWrite(double output) {
+        // TODO fix this
     }
 }

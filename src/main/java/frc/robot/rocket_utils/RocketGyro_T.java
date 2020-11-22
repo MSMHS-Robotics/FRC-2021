@@ -8,16 +8,7 @@ public class RocketGyro_T implements Gyro {
 
     /** Creates a new RocketGyro */
     public RocketGyro_T() {
-    }
-    
-    /**
-     * Gets the current heading/angle
-     * ABSOLUTELY no idea how this is going to work in simulation
-     * @return the current rotation around the Z axis
-     */
-    public double getYaw() {
-        return yaw;
-    }
+    }    
 
     /**
      * resets the gyro
@@ -26,30 +17,32 @@ public class RocketGyro_T implements Gyro {
     public void reset() {
         yaw = 0;
     }
-
     
-    
-    
-    /** The stuff beneath this comment is here so no errors are thrown */
+    /**
+     * Gets the current yaw angle of the gyro
+     * @return the yaw angle of the gyro (between -180 and 180)
+     */
     @Override
     public double getAngle() {
-        // TODO Auto-generated method stub
         return yaw;
     }
+    
+    /**
+     * Sets the yaw, for testing purposes
+     * @param yaw the new yaw value
+     */
+    public void setYaw(double yaw) {
+        this.yaw = yaw;
+    }
+    
+
+    /** The stuff beneath this comment is here so no errors are thrown */
+    @Override
+    public void close() throws Exception {}
 
     @Override
-    public void close() throws Exception {
-        // TODO Auto-generated method stub
-    }
+    public void calibrate() {}
 
     @Override
-    public void calibrate() {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public double getRate() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
+    public double getRate() {return 0;}
 }

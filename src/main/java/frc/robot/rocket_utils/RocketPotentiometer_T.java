@@ -37,20 +37,12 @@ public class RocketPotentiometer_T implements Potentiometer {
 
     /** Ignore these, these are here for no errors */
     @Override
-    public void setPIDSourceType(PIDSourceType pidSource) {
-        // TODO Auto-generated method stub
-    }
+    public void setPIDSourceType(PIDSourceType pidSource) {}
 
     @Override
-    public PIDSourceType getPIDSourceType() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    public PIDSourceType getPIDSourceType() {return null;}
 
     @Override
-    public double pidGet() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
+    public double pidGet() {return 0;}
     
 }

@@ -139,7 +139,7 @@ public class Drivetrain extends SubsystemBase {
      * @return a boolean representing if the robot has reached the angle or not
      */
     public boolean turnToAngle(double angle) {
-        diffDrive.arcadeDrive(0, turningPID.calculate(gyro.getYaw(), angle));
+        diffDrive.arcadeDrive(0, turningPID.calculate(gyro.getAngle(), angle));
         return turningPID.atSetpoint();
     }
 
@@ -150,7 +150,7 @@ public class Drivetrain extends SubsystemBase {
      * @return a bool representing whether we're there yet or not
      */
     public boolean driveDistance(double distance, double lastHeading) {
-        diffDrive.arcadeDrive(distancePID.calculate(getEncoderAverage(), distance), turningPID.calculate(gyro.getYaw(), lastHeading));
+        diffDrive.arcadeDrive(distancePID.calculate(getEncoderAverage(), distance), turningPID.calculate(gyro.getAngle(), lastHeading));
         return distancePID.atSetpoint();
     }
 
@@ -217,7 +217,7 @@ public class Drivetrain extends SubsystemBase {
      * @return the current heading
      */
     public double getHeading() {
-        return gyro.getYaw(); // possibly change to getAngle() and then make sure to wrap to zero?
+        return gyro.getAngle(); // possibly change to getAngle() and then make sure to wrap to zero?
     }
 
     /**

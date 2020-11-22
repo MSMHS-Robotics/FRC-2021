@@ -10,7 +10,6 @@ public class RocketCANEncoder_T {
     private double lastTime = 0;
     private double lastTicks = 0;
     private double scaleFactor = 1;
-    private Timer timer;
 
     /**
      * Creates a new RocketCANEncoder
@@ -18,7 +17,6 @@ public class RocketCANEncoder_T {
      */
     public RocketCANEncoder_T(RocketSparkMAX_T motor) {
         this.motor = motor;
-        timer = new Timer();
     }
 
     /**
@@ -38,9 +36,9 @@ public class RocketCANEncoder_T {
      * @return the current velocity in RPMs
      */
     public double getVelocity() {
-        double ticksSinceLast = (ticks - lastTicks) / (timer.getFPGATimestamp() - lastTime);
+        double ticksSinceLast = (ticks - lastTicks) / (Timer.getFPGATimestamp() - lastTime);
         lastTicks = ticks;
-        lastTime = timer.getFPGATimestamp();
+        lastTime = Timer.getFPGATimestamp();
         return ticksSinceLast / Constants.neoTicksPerRev;
     }
 

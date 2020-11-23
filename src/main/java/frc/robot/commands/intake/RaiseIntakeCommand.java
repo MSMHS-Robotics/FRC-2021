@@ -1,0 +1,27 @@
+package frc.robot.commands.intake;
+
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
+public class RaiseIntakeCommand extends CommandBase {
+    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+    private final Intake intake;
+
+    /**
+     * Creates a new RaiseIntakeCommand command
+     * @param intake an intake subsystem to be used by this command
+     */
+    public RaiseIntakeCommand(Intake intake) {
+        this.intake = intake;
+        addRequirements(intake);
+    }
+
+    @Override
+    public void execute() {
+        intake.raiseIntake();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return intake.isIntakeRaised();
+    }
+}

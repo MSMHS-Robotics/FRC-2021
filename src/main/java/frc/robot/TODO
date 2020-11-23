@@ -2,14 +2,9 @@ Todo (1):
  * make it so that this builds
  * spell-check all files
  * flesh out Vision.java
- * make a drive off line auto
  * make the climber subsystem
  * make checking the name of the joystick using DriverStation.getJoystickName or getJoystickType() to check to make sure the gamepads are in the right mode (d/x)
  * make it so you put distances in inches instead of ticks (add some kind of internal conversion)
  * make auto chooser
  * start posting stuff to Shuffleboard
- * make a raiseIntake() command
- * make a lowerIntake() command
- * make a intakeIn() command
- * make an outakeOut() command
  * make a shoot() command

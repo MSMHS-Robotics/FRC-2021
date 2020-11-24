@@ -1,6 +1,10 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.rocket_utils.RocketDigitalInput_T;
 import frc.robot.rocket_utils.RocketMotor;
@@ -16,6 +20,15 @@ public class Climber extends SubsystemBase {
     private RocketMotor extendMotor;
     private DigitalInput limitSwitch;
     private Boolean extendClimber = false;
+
+    private ShuffleboardTab tab = Shuffleboard.getTab("tab");
+    private NetworkTableEntry sb_status = tab.add("Status", false).getEntry();
+    private NetworkTableEntry sb_extended = tab.add("Climber Extended", false).getEntry();
+    //private NetworkTableEntry sb_current = tab.add("Current Draw", 0).getEntry(); // not sure how to implement this, might need the PDP class back
+    private NetworkTableEntry sb_climberSpeed = tab.add("Climb Motor Speed", 0).getEntry();
+    private NetworkTableEntry sb_extendSpeed = tab.add("Extend Motor Speed", 0).getEntry();
+    private NetworkTableEntry debugButton = tab.add("Debug Mode?", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+  
 
     public Climber(int climber_p, int climberExtend_p, int limitSwitch_p) {
         if (Constants.unitTests) {
@@ -77,6 +90,16 @@ public class Climber extends SubsystemBase {
             if(limitSwitch.get()) { // we reach the top
                 extendMotor.set(0); // and then stop it. Should lead to minor oscillating at the top
             }
+        }
+
+        /**
+         * Our shuffleboard values
+         */
+        sb_status.setBoolean(this.isGood());
+        sb_extended.setBoolean(this.isClimberExtended());
+        if (debugButton.getBoolean(false)) { // if we're in debug mode
+            sb_climberSpeed.setDouble(climberMotor.get()); // push extra information
+            sb_extendSpeed.setDouble(extendMotor.get());
         }
     }
 }

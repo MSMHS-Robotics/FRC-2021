@@ -33,7 +33,7 @@ public final class Constants {
     
     // climber
     public static final int climber_p = 12;
-    public static final int climberPosition_p = 13;
+    public static final int climberExtend_p = 13;
 
     /**
      * Define the PWM port numbers for sensors and such here. Makes it a little easier to manage

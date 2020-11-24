@@ -8,4 +8,9 @@ public class Vision extends SubsystemBase {
     
     public Vision() {
     }
+
+    public double getNeededRPM() {
+        //TODO actually implement
+        return 1;
+    }
 }

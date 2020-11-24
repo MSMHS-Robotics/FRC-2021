@@ -89,4 +89,11 @@ public final class Constants {
         public static final double intakeRaisedSetpoint = 5;
         public static final double intakeLoweredSetpoint = 0;
     }
+
+    public static final class ShooterPresets {
+        public static final double layupRPM = 3800; // (shooting from directly in front of the goal)
+        public static final double lineRPM = 3150; // (shooting from the starting line)
+        public static final double trenchRPM = 3400; // (shooting from the trench run)
+        public static final double maxRPM = 6000; // (shooting at a demo or when screwing around)
+    }
 }

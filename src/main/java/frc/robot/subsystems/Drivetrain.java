@@ -5,12 +5,16 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.rocket_utils.RocketCANEncoder_T;
 import frc.robot.rocket_utils.RocketEncoder_T;
@@ -46,11 +50,27 @@ public class Drivetrain extends SubsystemBase {
 
     private SpeedControllerGroup leftSide;
     private SpeedControllerGroup rightSide;
+    private double leftStickY = 0;
+    private double rightStickY = 0;
     private DifferentialDrive diffDrive;
     
     private PIDController turningPID;
     private PIDController distancePID;
 
+    private ShuffleboardTab tab = Shuffleboard.getTab("tab");
+    private NetworkTableEntry sb_status = tab.add("Status", false).getEntry();
+    private NetworkTableEntry sb_gyro = tab.add("Heading", 0).getEntry();
+    private NetworkTableEntry sb_velocity = tab.add("Velocity", 0).getEntry();
+    private NetworkTableEntry sb_gyroReset = tab.add("Reset Gyro", false).getEntry(); //TODO add functionality to these
+    private NetworkTableEntry sb_encoderReset = tab.add("Reset Encoders", false).getEntry();
+    private NetworkTableEntry sb_leftY = tab.add("Left Stick Y", 0).getEntry();
+    private NetworkTableEntry sb_rightY = tab.add("Right Stick Y", 0).getEntry();
+    
+    private NetworkTableEntry sb_distance = tab.add("Encoder Distance", 0).getEntry();
+    private NetworkTableEntry sb_leftSpeed = tab.add("Left Side Speed", 0).getEntry();
+    private NetworkTableEntry sb_rightSpeed = tab.add("Right Side Speed", 0).getEntry();
+    private NetworkTableEntry debugButton = tab.add("Debug Mode?", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+    
     /**
      * Creates a new drivetrain subsystem, which is kinda needed to move
      * @param left1_p the port for the 1st left motor
@@ -130,6 +150,8 @@ public class Drivetrain extends SubsystemBase {
      * @param rightStickY the Y value of the right joystick
      */
     public void drive(double leftStickY, double rightStickY) {
+        this.leftStickY = leftStickY;
+        this.rightStickY = rightStickY;
         diffDrive.tankDrive(leftStickY, rightStickY, true); // "true" to square inputs in the diff drive
     }
 
@@ -221,6 +243,46 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
+     * Gets the velocity in the forwards direction read by the gyro
+     * @return our speed in the forwards direction, negative is backwards
+     */
+    public double getVelocity() {
+        return gyro.getVelocity();
+    }
+
+    /**
+     * Gets the speed of the left side of the drivetrain, as read by the encoders
+     * @return the speed of the left side of the drivetrain, negative is reverse
+     */
+    public double getLeftSpeed() {
+        return (left1Encoder.getVelocity() + left2Encoder.getVelocity() + left3Encoder.getVelocity() + leftEncoder.getVelocity());
+    }
+
+    /**
+     * Gets the speed of the right side of the drivetrain, as read by the encoders
+     * @return the speed of the right side of the drivetrain, negative is reverse
+     */
+    public double getRightSpeed() {
+        return (right1Encoder.getVelocity() + right1Encoder.getVelocity() + right1Encoder.getVelocity() + rightEncoder.getVelocity());
+    }
+
+    /**
+     * Gets the last passed left stick Y value to the drive() function
+     * @return the left stick Y value
+     */
+    public double getLeftStickY() {
+        return leftStickY;
+    }
+
+    /**
+     * Gets the last passed right stick Y value to the drive() function
+     * @return the right stick Y value
+     */
+    public double getRightStickY() {
+        return rightStickY;
+    }
+
+    /**
      * the required isGood() method
      * Checks all motors to see if they exist
      * @return if the subsystem is functioning ("good") or not
@@ -233,5 +295,18 @@ public class Drivetrain extends SubsystemBase {
 
     @Override
     public void periodic() {
+        /**
+         * Our shuffleboard values
+         */
+        sb_status.setBoolean(this.isGood());
+        sb_gyro.setDouble(this.getHeading());
+        sb_velocity.setDouble(this.getVelocity());
+        sb_leftY.setDouble(this.getLeftStickY());
+        sb_rightY.setDouble(this.getRightStickY());
+        if(debugButton.getBoolean(false)) { // debug-mode information
+            sb_distance.setDouble(this.getEncoderAverage());
+            sb_leftSpeed.setDouble(this.getLeftSpeed());
+            sb_rightSpeed.setDouble(this.getRightSpeed());
+        }
     }
 }

@@ -1,7 +1,6 @@
 package frc.robot.rocket_utils;
 
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 /** A simulated gyro (specifically a navX) */
 public class RocketGyro_T extends RocketGyro {

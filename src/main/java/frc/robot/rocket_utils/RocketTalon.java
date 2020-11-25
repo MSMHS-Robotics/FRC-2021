@@ -96,6 +96,5 @@ public class RocketTalon implements RocketMotor {
 
     @Override
     public void pidWrite(double output) {
-        // TODO fix this
     }
 }

@@ -24,13 +24,12 @@ public class PassThrough extends SubsystemBase {
   
     /**
      * Creates a new PassThrough.
-     * @param passThrough_p the CAN ID/port of the pass-through motor. This should be specified in Constants.java
-    */
-    public PassThrough(int passThrough_p) {
+     */
+    public PassThrough() {
         if (Constants.unitTests) {
-            passThroughMotor = new RocketTalon_T(passThrough_p);
+            passThroughMotor = new RocketTalon_T(Constants.passThrough_p);
         } else {
-            passThroughMotor = new RocketTalon(passThrough_p);
+            passThroughMotor = new RocketTalon(Constants.passThrough_p);
         }
     }
 
@@ -40,6 +39,14 @@ public class PassThrough extends SubsystemBase {
     */
     public void setPassThrough(double power) {
         passThroughMotor.set(power); // != null is handled inside RocketUtils
+    }
+
+    /**
+     * Gets the speed of the pass through
+     * @return the last set speed of the pass through
+     */
+    public double getSpeed() {
+        return passThroughMotor.get();
     }
 
     /**

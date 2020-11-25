@@ -27,6 +27,6 @@ public class SetIntakeCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return intake.getIntakeSpeed() == power;
     }
 }

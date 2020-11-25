@@ -34,19 +34,16 @@ public class Intake extends SubsystemBase {
      * Creates a new Intake The intake controls the intake-y parts (position and
      * intake/outake)
      * 
-     * @param intake_p            the intake motor port
-     * @param intakePosition_p    the intake position motor port
-     * @param intakePositionPot_p the analog port for the potentiometer attached to the intake
      */
-    public Intake(int intake_p, int intakePosition_p, int intakePositionPot_p) {
+    public Intake() {
         if (Constants.unitTests) {
-            motor = new RocketTalon_T(intake_p);
-            positionMotor = new RocketTalon_T(intakePosition_p);
-            positionPot = new RocketPotentiometer_T(intakePositionPot_p, Constants.intake.fullRange, Constants.intake.offset);
+            motor = new RocketTalon_T(Constants.intake_p);
+            positionMotor = new RocketTalon_T(Constants.intakePosition_p);
+            positionPot = new RocketPotentiometer_T(Constants.intakePositionPot_p, Constants.intake.fullRange, Constants.intake.offset);
         } else {
-            motor = new RocketTalon(intake_p);
-            positionMotor = new RocketTalon(intakePosition_p);
-            positionPot = new AnalogPotentiometer(intakePositionPot_p, Constants.intake.fullRange, Constants.intake.offset);
+            motor = new RocketTalon(Constants.intake_p);
+            positionMotor = new RocketTalon(Constants.intakePosition_p);
+            positionPot = new AnalogPotentiometer(Constants.intakePositionPot_p, Constants.intake.fullRange, Constants.intake.offset);
         }
 
         intakePositionPID = new PIDController(Constants.intake.kP, Constants.intake.kI, Constants.intake.kD);

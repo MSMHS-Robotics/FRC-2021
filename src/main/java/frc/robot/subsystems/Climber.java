@@ -30,15 +30,15 @@ public class Climber extends SubsystemBase {
     private NetworkTableEntry debugButton = tab.add("Debug Mode?", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
   
 
-    public Climber(int climber_p, int climberExtend_p, int limitSwitch_p) {
+    public Climber() {
         if (Constants.unitTests) {
-            climberMotor = new RocketTalon_T(climber_p);
-            extendMotor = new RocketTalon_T(climberExtend_p);
-            limitSwitch = new RocketDigitalInput_T(limitSwitch_p);
+            climberMotor = new RocketTalon_T(Constants.climber_p);
+            extendMotor = new RocketTalon_T(Constants.climberExtend_p);
+            limitSwitch = new RocketDigitalInput_T(Constants.limitSwitch_p);
         } else {
-            climberMotor = new RocketTalon(climber_p);
-            extendMotor = new RocketTalon(climberExtend_p);
-            limitSwitch = new DigitalInput(limitSwitch_p);
+            climberMotor = new RocketTalon(Constants.climber_p);
+            extendMotor = new RocketTalon(Constants.climberExtend_p);
+            limitSwitch = new DigitalInput(Constants.limitSwitch_p);
         }
     }
 

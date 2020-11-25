@@ -34,6 +34,7 @@ public final class Constants {
     // climber
     public static final int climber_p = 12;
     public static final int climberExtend_p = 13;
+    public static final int limitSwitch_p = 1; // need to change
 
     /**
      * Define the PWM port numbers for sensors and such here. Makes it a little easier to manage

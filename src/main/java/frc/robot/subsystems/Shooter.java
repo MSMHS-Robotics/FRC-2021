@@ -40,22 +40,18 @@ public class Shooter extends SubsystemBase {
 
     /**
      * Creates a new Shooter
-     * 
-     * @param shooter1_p the port for the first shooter motor
-     * @param shooter2_p the port for the second/follower shooter motor
-     * @param trigger_p  the port for the trigger motor
      */
-    public Shooter(int shooter1_p, int shooter2_p, int trigger_p) {
+    public Shooter() {
         if (Constants.unitTests) {
-            shooterMotor = new RocketSparkMAX_T(shooter1_p);
-            shooterFollowerMotor = new RocketSparkMAX_T(shooter2_p);
-            triggerMotor = new RocketSparkMAX_T(trigger_p);
+            shooterMotor = new RocketSparkMAX_T(Constants.shooter1_p);
+            shooterFollowerMotor = new RocketSparkMAX_T(Constants.shooter2_p);
+            triggerMotor = new RocketSparkMAX_T(Constants.trigger_p);
 
             shooterEncoder = new RocketCANEncoder_T((RocketSparkMAX_T) shooterMotor);
         } else {
-            shooterMotor = new RocketSparkMAX(shooter1_p);
-            shooterFollowerMotor = new RocketSparkMAX(shooter2_p);
-            triggerMotor = new RocketSparkMAX(trigger_p);
+            shooterMotor = new RocketSparkMAX(Constants.shooter1_p);
+            shooterFollowerMotor = new RocketSparkMAX(Constants.shooter2_p);
+            triggerMotor = new RocketSparkMAX(Constants.trigger_p);
 
             shooterEncoder = new RocketCANEncoder((CANSparkMax) shooterMotor);
         }
@@ -70,6 +66,14 @@ public class Shooter extends SubsystemBase {
      */
     public void setTrigger(double power) {
         triggerMotor.set(power);
+    }
+
+    /**
+     * A method to get the trigger motor's speed
+     * @return the last set speed of the trigger motor
+     */
+    public double getTriggerSpeed() {
+        return triggerMotor.get();
     }
 
     /**

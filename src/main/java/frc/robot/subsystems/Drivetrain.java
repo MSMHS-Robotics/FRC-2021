@@ -1,19 +1,22 @@
 package frc.robot.subsystems;
 
-import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.rocket_utils.RocketCANEncoder;
+import frc.robot.rocket_utils.RocketCANEncoderInterface;
 import frc.robot.rocket_utils.RocketCANEncoder_T;
 import frc.robot.rocket_utils.RocketEncoder_T;
+import frc.robot.rocket_utils.RocketGyro;
 import frc.robot.rocket_utils.RocketGyro_T;
 import frc.robot.rocket_utils.RocketMotor;
 import frc.robot.rocket_utils.RocketSparkMAX;
@@ -31,26 +34,42 @@ public class Drivetrain extends SubsystemBase {
     private RocketMotor right2;
     private RocketMotor right3;
 
-    private Gyro gyro;
+    private RocketGyro gyro;
 
     private Encoder leftEncoder;
     private Encoder rightEncoder;
 
-    private Object left1Encoder;
-    private Object left2Encoder;
-    private Object left3Encoder;
-    private Object right1Encoder;
-    private Object right2Encoder;
-    private Object right3Encoder;
+    private RocketCANEncoderInterface left1Encoder;
+    private RocketCANEncoderInterface left2Encoder;
+    private RocketCANEncoderInterface left3Encoder;
+    private RocketCANEncoderInterface right1Encoder;
+    private RocketCANEncoderInterface right2Encoder;
+    private RocketCANEncoderInterface right3Encoder;
 
 
     private SpeedControllerGroup leftSide;
     private SpeedControllerGroup rightSide;
+    private double leftStickY = 0;
+    private double rightStickY = 0;
     private DifferentialDrive diffDrive;
     
     private PIDController turningPID;
     private PIDController distancePID;
 
+    private ShuffleboardTab tab = Shuffleboard.getTab("tab");
+    private NetworkTableEntry sb_status = tab.add("Status", false).getEntry();
+    private NetworkTableEntry sb_gyro = tab.add("Heading", 0).getEntry();
+    private NetworkTableEntry sb_velocity = tab.add("Velocity", 0).getEntry();
+    private NetworkTableEntry sb_gyroReset = tab.add("Reset Gyro", false).getEntry(); //TODO add functionality to these
+    private NetworkTableEntry sb_encoderReset = tab.add("Reset Encoders", false).getEntry();
+    private NetworkTableEntry sb_leftY = tab.add("Left Stick Y", 0).getEntry();
+    private NetworkTableEntry sb_rightY = tab.add("Right Stick Y", 0).getEntry();
+    
+    private NetworkTableEntry sb_distance = tab.add("Encoder Distance", 0).getEntry();
+    private NetworkTableEntry sb_leftSpeed = tab.add("Left Side Speed", 0).getEntry();
+    private NetworkTableEntry sb_rightSpeed = tab.add("Right Side Speed", 0).getEntry();
+    private NetworkTableEntry debugButton = tab.add("Debug Mode?", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+    
     /**
      * Creates a new drivetrain subsystem, which is kinda needed to move
      * @param left1_p the port for the 1st left motor
@@ -73,7 +92,7 @@ public class Drivetrain extends SubsystemBase {
             right2 = new RocketSparkMAX_T(right2_p);
             right3 = new RocketSparkMAX_T(right3_p);
 
-            gyro = new RocketGyro_T(); // not sure how useful this'll be
+            gyro = new RocketGyro_T(Port.kMXP); // not sure how useful this'll be
 
             leftEncoder = new RocketEncoder_T(leftEncoder1_p, leftEncoder2_p); // or what the heck these'll do
             rightEncoder = new RocketEncoder_T(rightEncoder1_p, rightEncoder2_p);
@@ -92,17 +111,17 @@ public class Drivetrain extends SubsystemBase {
             right2 = new RocketSparkMAX(right2_p);
             right3 = new RocketSparkMAX(right3_p);
 
-            gyro = new AHRS(Port.kMXP); // this is one port that def won't change
+            gyro = new RocketGyro(Port.kMXP); // this is one port that def won't change
 
             leftEncoder = new Encoder(leftEncoder1_p, leftEncoder2_p);
             rightEncoder = new Encoder(rightEncoder1_p, rightEncoder2_p);
 
-            left1Encoder = new CANEncoder((CANSparkMax) left1);
-            left2Encoder = new CANEncoder((CANSparkMax) left2);
-            left3Encoder = new CANEncoder((CANSparkMax) left3);
-            right1Encoder = new CANEncoder((CANSparkMax) right1);
-            right2Encoder = new CANEncoder((CANSparkMax) right2);
-            right3Encoder = new CANEncoder((CANSparkMax) right3);
+            left1Encoder = new RocketCANEncoder((CANSparkMax) left1);
+            left2Encoder = new RocketCANEncoder((CANSparkMax) left2);
+            left3Encoder = new RocketCANEncoder((CANSparkMax) left3);
+            right1Encoder = new RocketCANEncoder((CANSparkMax) right1);
+            right2Encoder = new RocketCANEncoder((CANSparkMax) right2);
+            right3Encoder = new RocketCANEncoder((CANSparkMax) right3);
         }
 
         left1Encoder.setPositionConversionFactor(Constants.canEncoderScaleFactor);
@@ -130,6 +149,8 @@ public class Drivetrain extends SubsystemBase {
      * @param rightStickY the Y value of the right joystick
      */
     public void drive(double leftStickY, double rightStickY) {
+        this.leftStickY = leftStickY;
+        this.rightStickY = rightStickY;
         diffDrive.tankDrive(leftStickY, rightStickY, true); // "true" to square inputs in the diff drive
     }
 
@@ -221,6 +242,46 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
+     * Gets the velocity in the forwards direction read by the gyro
+     * @return our speed in the forwards direction, negative is backwards
+     */
+    public double getVelocity() {
+        return gyro.getVelocity();
+    }
+
+    /**
+     * Gets the speed of the left side of the drivetrain, as read by the encoders
+     * @return the speed of the left side of the drivetrain, negative is reverse
+     */
+    public double getLeftSpeed() {
+        return (left1Encoder.getVelocity() + left2Encoder.getVelocity() + left3Encoder.getVelocity() + leftEncoder.getRate());
+    }
+
+    /**
+     * Gets the speed of the right side of the drivetrain, as read by the encoders
+     * @return the speed of the right side of the drivetrain, negative is reverse
+     */
+    public double getRightSpeed() {
+        return (right1Encoder.getVelocity() + right1Encoder.getVelocity() + right1Encoder.getVelocity() + rightEncoder.getRate());
+    }
+
+    /**
+     * Gets the last passed left stick Y value to the drive() function
+     * @return the left stick Y value
+     */
+    public double getLeftStickY() {
+        return leftStickY;
+    }
+
+    /**
+     * Gets the last passed right stick Y value to the drive() function
+     * @return the right stick Y value
+     */
+    public double getRightStickY() {
+        return rightStickY;
+    }
+
+    /**
      * the required isGood() method
      * Checks all motors to see if they exist
      * @return if the subsystem is functioning ("good") or not
@@ -233,5 +294,18 @@ public class Drivetrain extends SubsystemBase {
 
     @Override
     public void periodic() {
+        /**
+         * Our shuffleboard values
+         */
+        sb_status.setBoolean(this.isGood());
+        sb_gyro.setDouble(this.getHeading());
+        sb_velocity.setDouble(this.getVelocity());
+        sb_leftY.setDouble(this.getLeftStickY());
+        sb_rightY.setDouble(this.getRightStickY());
+        if(debugButton.getBoolean(false)) { // debug-mode information
+            sb_distance.setDouble(this.getEncoderAverage());
+            sb_leftSpeed.setDouble(this.getLeftSpeed());
+            sb_rightSpeed.setDouble(this.getRightSpeed());
+        }
     }
 }

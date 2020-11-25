@@ -1,12 +1,16 @@
 package frc.robot.rocket_utils;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Timer;
+import frc.robot.Constants;
 
 /** A class to simulate an Encoder */
 public class RocketEncoder_T extends Encoder {
     private int port1, port2;
     private int ticks = 0;
     private double revsPerTick = 1;
+    private double lastTime = 0;
+    private double lastTicks = 0;
     
     /** 
      * Creates a new RocketEncoder
@@ -23,6 +27,7 @@ public class RocketEncoder_T extends Encoder {
     /** Resets the encoder's tick count to 0 */
     public void reset() {
         this.ticks = 0;
+        this.lastTicks = ticks;
     }
 
     /**
@@ -48,5 +53,19 @@ public class RocketEncoder_T extends Encoder {
      */
     public int get() {
         return ticks;
+    }
+
+    /**
+     * gets the velocity in RPM
+     * divides tick count minus tick count last time this was called by time minus
+     * the time when this was called last. Then devides _that_ by ticks per rev of the through-bore encoder
+     * @return the current velocity in RPMs
+     */
+    @Override
+    public double getRate() {
+        double ticksSinceLast = (ticks - lastTicks) / (Timer.getFPGATimestamp() - lastTime);
+        lastTicks = ticks;
+        lastTime = Timer.getFPGATimestamp();
+        return ticksSinceLast / Constants.encoderTicksPerRev;
     }
 }

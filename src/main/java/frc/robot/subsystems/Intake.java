@@ -1,8 +1,12 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.rocket_utils.RocketTalon_T;
 import frc.robot.rocket_utils.RocketMotor;
@@ -19,6 +23,12 @@ public class Intake extends SubsystemBase {
     private Potentiometer positionPot;
 
     private PIDController intakePositionPID;
+
+    private ShuffleboardTab tab = Shuffleboard.getTab("tab");
+    private NetworkTableEntry sb_status = tab.add("Status", false).getEntry();
+    private NetworkTableEntry sb_raised = tab.add("Intake Raised?", false).getEntry();
+    private NetworkTableEntry sb_speed = tab.add("Intake Speed", 0).getEntry();
+    private NetworkTableEntry debugButton = tab.add("Debug Mode?", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
 
     /**
      * Creates a new Intake The intake controls the intake-y parts (position and
@@ -107,5 +117,11 @@ public class Intake extends SubsystemBase {
     @Override
     public void periodic() {
         positionMotor.set(intakePositionPID.calculate(positionPot.get()));
+
+        sb_status.setBoolean(this.isGood());
+        sb_raised.setBoolean(this.isIntakeRaised());
+        if (debugButton.getBoolean(false)) {
+            sb_speed.setDouble(this.getIntakeSpeed());
+        }
     }
 }

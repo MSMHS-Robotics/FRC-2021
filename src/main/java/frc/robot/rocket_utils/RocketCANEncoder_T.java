@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
 
 /** A class to simulate a CANEncoder */
-public class RocketCANEncoder_T {
+public class RocketCANEncoder_T implements RocketCANEncoderInterface {
     private RocketSparkMAX_T motor;
     private double ticks = 0;
     private double lastTime = 0;

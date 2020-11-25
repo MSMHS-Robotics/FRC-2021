@@ -1,21 +1,19 @@
 package frc.robot.subsystems;
 
-import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.rocket_utils.RocketCANEncoder;
+import frc.robot.rocket_utils.RocketCANEncoderInterface;
 import frc.robot.rocket_utils.RocketCANEncoder_T;
 import frc.robot.rocket_utils.RocketEncoder_T;
 import frc.robot.rocket_utils.RocketGyro;
@@ -41,12 +39,12 @@ public class Drivetrain extends SubsystemBase {
     private Encoder leftEncoder;
     private Encoder rightEncoder;
 
-    private Object left1Encoder;
-    private Object left2Encoder;
-    private Object left3Encoder;
-    private Object right1Encoder;
-    private Object right2Encoder;
-    private Object right3Encoder;
+    private RocketCANEncoderInterface left1Encoder;
+    private RocketCANEncoderInterface left2Encoder;
+    private RocketCANEncoderInterface left3Encoder;
+    private RocketCANEncoderInterface right1Encoder;
+    private RocketCANEncoderInterface right2Encoder;
+    private RocketCANEncoderInterface right3Encoder;
 
 
     private SpeedControllerGroup leftSide;
@@ -118,12 +116,12 @@ public class Drivetrain extends SubsystemBase {
             leftEncoder = new Encoder(leftEncoder1_p, leftEncoder2_p);
             rightEncoder = new Encoder(rightEncoder1_p, rightEncoder2_p);
 
-            left1Encoder = new CANEncoder((CANSparkMax) left1);
-            left2Encoder = new CANEncoder((CANSparkMax) left2);
-            left3Encoder = new CANEncoder((CANSparkMax) left3);
-            right1Encoder = new CANEncoder((CANSparkMax) right1);
-            right2Encoder = new CANEncoder((CANSparkMax) right2);
-            right3Encoder = new CANEncoder((CANSparkMax) right3);
+            left1Encoder = new RocketCANEncoder((CANSparkMax) left1);
+            left2Encoder = new RocketCANEncoder((CANSparkMax) left2);
+            left3Encoder = new RocketCANEncoder((CANSparkMax) left3);
+            right1Encoder = new RocketCANEncoder((CANSparkMax) right1);
+            right2Encoder = new RocketCANEncoder((CANSparkMax) right2);
+            right3Encoder = new RocketCANEncoder((CANSparkMax) right3);
         }
 
         left1Encoder.setPositionConversionFactor(Constants.canEncoderScaleFactor);

@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.intake.LowerIntakeCommand;
 import frc.robot.commands.intake.RaiseIntakeCommand;
 import frc.robot.commands.intake.SetIntakeCommand;
 import frc.robot.commands.passthrough.SetPassThroughCommand;
-import frc.robot.commands.shooter.SetTriggerCommand;
 import frc.robot.commands.shooter.WarmUpCommand;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
@@ -72,10 +72,11 @@ public class RobotContainer {
     private final SetIntakeCommand intakeOut = new SetIntakeCommand(intake, -1);
 
     private final SetPassThroughCommand indexIn = new SetPassThroughCommand(passThrough, 1);
-    private final SetPassThroughCommand passThroughIdle = new SetPassThroughCommand(passThrough, -0.5);
 
-    private final SetTriggerCommand shooterIdle = new SetTriggerCommand(shooter, -0.5);
     private final WarmUpCommand warmUp = new WarmUpCommand(shooter, gamepad1, vision);
+
+    // The same janky joystick stuff from last year
+    private final RunCommand runDrivetrain = new RunCommand(() -> drivetrain.drive(gamepad1.getRawAxis(1), gamepad1.getRawAxis(5)), drivetrain);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -94,9 +95,10 @@ public class RobotContainer {
     private void configureButtonBindings() {
         rightBumper.whenPressed(lowerIntake);
         rightBumper.whenPressed(intakeIn);
-        rightBumper.whenPressed(shooterIdle);
-
+        rightBumper.whileHeld(indexIn);
         yButton.whenPressed(raiseIntake);
+
+        bButton.whileHeld(warmUp);
     }
 
     /**

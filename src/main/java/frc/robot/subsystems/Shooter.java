@@ -25,6 +25,7 @@ public class Shooter extends SubsystemBase {
     private RocketMotor triggerMotor;
     private RocketCANEncoderInterface shooterEncoder;
 
+    private Boolean isIdling = true;
     private PIDController shooterPID;
 
     private ShuffleboardTab tab = Shuffleboard.getTab("tab");
@@ -77,6 +78,14 @@ public class Shooter extends SubsystemBase {
     }
 
     /**
+     * Sets the state of the shooter (idling or not)
+     * @param state the state you want the shooter set to
+     */
+    public void setIdle(boolean state) {
+        isIdling = state;
+    }
+
+    /**
      * Resets the shooter encoders and control-y bits
      * Also sets all motors to 0
      */
@@ -110,6 +119,10 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
+        if (isIdling) {
+            setTrigger(-0.5);
+        }
+
         sb_status.setBoolean(this.isGood());
         sb_rpm.setDouble(this.shooterEncoder.getVelocity());
         sb_desiredRPM.setDouble(this.shooterPID.getSetpoint());

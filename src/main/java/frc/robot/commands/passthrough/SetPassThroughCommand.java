@@ -21,7 +21,13 @@ public class SetPassThroughCommand extends CommandBase {
 
     @Override
     public void execute() {
+        passThrough.setIdle(false);
         passThrough.setPassThrough(power);
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        passThrough.setIdle(true);
     }
 
     @Override

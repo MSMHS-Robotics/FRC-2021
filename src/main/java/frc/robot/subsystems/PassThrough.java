@@ -15,6 +15,7 @@ import frc.robot.Constants;
  */
 public class PassThrough extends SubsystemBase {
     private RocketMotor passThroughMotor;
+    private Boolean isIdling = true;
 
     private ShuffleboardTab tab = Shuffleboard.getTab("tab");
     private NetworkTableEntry sb_status = tab.add("Status", false).getEntry();
@@ -50,6 +51,14 @@ public class PassThrough extends SubsystemBase {
     }
 
     /**
+     * Sets the state of the pass-through (idling or not)
+     * @param state the state you want the pass-through set to
+     */
+    public void setIdle(boolean state) {
+        isIdling = state;
+    }
+
+    /**
      * Resets the pass-through subsystem to its pre-start state
      */
     public void reset() {
@@ -67,6 +76,10 @@ public class PassThrough extends SubsystemBase {
 
     @Override
     public void periodic() {
+        if (isIdling) { // if we're idling
+            setPassThrough(0.5); // move in
+        }
+        
         /**
          * Our shuffleboard stuff
          */

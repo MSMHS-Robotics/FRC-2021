@@ -49,6 +49,7 @@ public final class Constants {
     public static final double canEncoderScaleFactor = 1.0;
     public static final double encoderScaleFactor = 1.0;
     public static final double neoTicksPerRev = 42;
+    public static final double encoderTicksPerRev = 1; //TODO change to actual value
     public static final double wheelDiameter = 4.0;
 
     /**

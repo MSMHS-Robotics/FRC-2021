@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.rocket_utils.RocketCANEncoder_T;
 import frc.robot.rocket_utils.RocketEncoder_T;
+import frc.robot.rocket_utils.RocketGyro;
 import frc.robot.rocket_utils.RocketGyro_T;
 import frc.robot.rocket_utils.RocketMotor;
 import frc.robot.rocket_utils.RocketSparkMAX;
@@ -35,7 +36,7 @@ public class Drivetrain extends SubsystemBase {
     private RocketMotor right2;
     private RocketMotor right3;
 
-    private Gyro gyro;
+    private RocketGyro gyro;
 
     private Encoder leftEncoder;
     private Encoder rightEncoder;
@@ -93,7 +94,7 @@ public class Drivetrain extends SubsystemBase {
             right2 = new RocketSparkMAX_T(right2_p);
             right3 = new RocketSparkMAX_T(right3_p);
 
-            gyro = new RocketGyro_T(); // not sure how useful this'll be
+            gyro = new RocketGyro_T(Port.kMXP); // not sure how useful this'll be
 
             leftEncoder = new RocketEncoder_T(leftEncoder1_p, leftEncoder2_p); // or what the heck these'll do
             rightEncoder = new RocketEncoder_T(rightEncoder1_p, rightEncoder2_p);
@@ -112,7 +113,7 @@ public class Drivetrain extends SubsystemBase {
             right2 = new RocketSparkMAX(right2_p);
             right3 = new RocketSparkMAX(right3_p);
 
-            gyro = new AHRS(Port.kMXP); // this is one port that def won't change
+            gyro = new RocketGyro(Port.kMXP); // this is one port that def won't change
 
             leftEncoder = new Encoder(leftEncoder1_p, leftEncoder2_p);
             rightEncoder = new Encoder(rightEncoder1_p, rightEncoder2_p);
@@ -255,7 +256,7 @@ public class Drivetrain extends SubsystemBase {
      * @return the speed of the left side of the drivetrain, negative is reverse
      */
     public double getLeftSpeed() {
-        return (left1Encoder.getVelocity() + left2Encoder.getVelocity() + left3Encoder.getVelocity() + leftEncoder.getVelocity());
+        return (left1Encoder.getVelocity() + left2Encoder.getVelocity() + left3Encoder.getVelocity() + leftEncoder.getRate());
     }
 
     /**
@@ -263,7 +264,7 @@ public class Drivetrain extends SubsystemBase {
      * @return the speed of the right side of the drivetrain, negative is reverse
      */
     public double getRightSpeed() {
-        return (right1Encoder.getVelocity() + right1Encoder.getVelocity() + right1Encoder.getVelocity() + rightEncoder.getVelocity());
+        return (right1Encoder.getVelocity() + right1Encoder.getVelocity() + right1Encoder.getVelocity() + rightEncoder.getRate());
     }
 
     /**

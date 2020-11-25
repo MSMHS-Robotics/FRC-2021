@@ -1,13 +1,16 @@
 package frc.robot.rocket_utils;
 
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 /** A simulated gyro (specifically a navX) */
-public class RocketGyro_T implements Gyro {
-    public double yaw = 0;
+public class RocketGyro_T extends RocketGyro {
+    private double yaw = 0;
+    private double yVelocity = 0;
 
     /** Creates a new RocketGyro */
-    public RocketGyro_T() {
+    public RocketGyro_T(SPI.Port port) {
+        super(port);
     }    
 
     /**
@@ -16,6 +19,7 @@ public class RocketGyro_T implements Gyro {
     @Override
     public void reset() {
         yaw = 0;
+        yVelocity = 0;
     }
     
     /**
@@ -35,6 +39,24 @@ public class RocketGyro_T implements Gyro {
         this.yaw = yaw;
     }
     
+    /**
+     * Gets the Y velocity of the simulated gyro
+     * Units are m/s, unfortunately
+     * @return the simulated y velocity of the gyro
+     */
+    @Override
+    public double getVelocity() {
+        return yVelocity;
+    }
+
+    /**
+     * Sets the Y velocity of the simulated gyro
+     * @param velocity the velocity you want the gyro to have
+     */
+    public void setVelocity(double velocity) {
+        yVelocity = velocity;
+    }
+
 
     /** The stuff beneath this comment is here so no errors are thrown */
     @Override

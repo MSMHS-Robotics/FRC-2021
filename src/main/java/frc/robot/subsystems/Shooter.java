@@ -3,8 +3,12 @@ package frc.robot.subsystems;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.rocket_utils.RocketCANEncoder_T;
 import frc.robot.rocket_utils.RocketMotor;
@@ -22,6 +26,17 @@ public class Shooter extends SubsystemBase {
     private Object shooterEncoder;
 
     private PIDController shooterPID;
+
+    private ShuffleboardTab tab = Shuffleboard.getTab("tab");
+    private NetworkTableEntry sb_status = tab.add("Status", false).getEntry();
+    private NetworkTableEntry sb_rpm = tab.add("Current RPM", 0).getEntry();
+    private NetworkTableEntry sb_desiredRPM = tab.add("Target RPM", 0).getEntry();
+    private NetworkTableEntry sb_preset_layup = tab.add("Layup RPM", Constants.ShooterPresets.layupRPM).getEntry();
+    private NetworkTableEntry sb_preset_line = tab.add("Line RPM", Constants.ShooterPresets.lineRPM).getEntry();
+    private NetworkTableEntry sb_preset_trench = tab.add("Trench RPM", Constants.ShooterPresets.trenchRPM).getEntry();
+    private NetworkTableEntry sb_preset_max = tab.add("Max RPM", Constants.ShooterPresets.maxRPM).getEntry();
+    private NetworkTableEntry debugButton = tab.add("Debug Mode?", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+    
 
     /**
      * Creates a new Shooter
@@ -91,5 +106,8 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
+        sb_status.setBoolean(this.isGood());
+        sb_rpm.setDouble(this.shooterEncoder.getVelocity());
+        sb_desiredRPM.setDouble(this.shooterPID.getSetpoint());
     }
 }

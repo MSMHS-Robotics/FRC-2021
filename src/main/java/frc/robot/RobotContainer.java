@@ -19,6 +19,7 @@ import frc.robot.commands.intake.LowerIntakeCommand;
 import frc.robot.commands.intake.RaiseIntakeCommand;
 import frc.robot.commands.intake.SetIntakeCommand;
 import frc.robot.commands.passthrough.SetPassThroughCommand;
+import frc.robot.commands.shooter.ShootCommand;
 import frc.robot.commands.shooter.WarmUpCommand;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
@@ -76,7 +77,7 @@ public class RobotContainer {
 
     private final SetPassThroughCommand indexIn = new SetPassThroughCommand(passThrough, 1);
 
-    private final WarmUpCommand warmUp = new WarmUpCommand(shooter, gamepad1, vision);
+    private final ShootCommand shoot = new ShootCommand(shooter, vision, gamepad1);
     private final WarmUpCommand warmUp2 = new WarmUpCommand(shooter, gamepad2, vision);
 
     private final ExtendClimberCommand extendClimber = new ExtendClimberCommand(climber);
@@ -106,7 +107,7 @@ public class RobotContainer {
         rightBumper.whileHeld(indexIn);
         yButton.whenPressed(raiseIntake);
 
-        bButton.whileHeld(warmUp);
+        bButton.whileHeld(shoot);
         bButton2.whileHeld(warmUp2);
 
         xButton2.whenPressed(extendClimber);

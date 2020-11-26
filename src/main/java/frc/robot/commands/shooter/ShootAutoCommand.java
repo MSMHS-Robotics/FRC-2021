@@ -7,47 +7,34 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
 
 /** A command to shoot */
-public class ShootCommand extends CommandBase {
+public class ShootAutoCommand extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     private final Shooter shooter;
     private final Vision vision;
-    private Joystick joystick;
     private boolean isDone = false;
     private boolean isWarmedUp = false;
+    private double rpm;
 
     /**
-     * Creates a new ShootCommand command
+     * Creates a new ShootAutoCommand command
      * 
      * @param shooter a shooter subsystem to be used by this command
      * @param vision a vision subsystem to be used by this command (for the distance to the goal)
-     * @param joystick a joystick for this command, to get the d-pad stuff
+     * @param rpm the speed you want to shoot at. -1 to shoot based off of what the limelight says
      */
-    public ShootCommand(Shooter shooter, Vision vision, Joystick joystick) {
+    public ShootAutoCommand(Shooter shooter, Vision vision, double rpm) {
         this.shooter = shooter;
         this.vision = vision;
-        this.joystick = joystick;
+        this.rpm = rpm;
         addRequirements(shooter, vision);
     }
 
     @Override
     public void execute() {
-        int dpad = joystick.getPOV();
-        switch(dpad) {
-            case 0:
-                isWarmedUp = shooter.warmUp(Constants.ShooterPresets.layupRPM);
-                break;
-            case 90:
-                isWarmedUp = shooter.warmUp(Constants.ShooterPresets.lineRPM);
-                break;
-            case 180:
-                isWarmedUp = shooter.warmUp(Constants.ShooterPresets.trenchRPM);
-                break;
-            case 270:
-                isWarmedUp = shooter.warmUp(Constants.ShooterPresets.maxRPM);
-                break;
-            default:
-                isWarmedUp = shooter.warmUp(vision.getNeededRPM());
-                break;
+        if (rpm < 0) {
+            isWarmedUp = shooter.warmUp(vision.getNeededRPM());
+        } else {
+            isWarmedUp = shooter.warmUp(rpm);
         }
 
         if (isWarmedUp) {

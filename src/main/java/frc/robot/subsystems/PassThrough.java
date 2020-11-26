@@ -20,6 +20,8 @@ public class PassThrough extends SubsystemBase {
     private ShuffleboardTab tab = Shuffleboard.getTab("tab");
     private NetworkTableEntry sb_status = tab.add("Status", false).getEntry();
     private NetworkTableEntry sb_speed = tab.add("PassThrough Speed", 0).getEntry();
+    private NetworkTableEntry sb_resetSubsystem = tab.add("Reset PassThrough", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+    private NetworkTableEntry sb_resetAll = tab.add("Hard-Reset Everything", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
     private NetworkTableEntry debugButton = tab.add("Debug Mode?", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
     
   
@@ -86,6 +88,22 @@ public class PassThrough extends SubsystemBase {
         sb_status.setBoolean(this.isGood());
         if (debugButton.getBoolean(false)) {
             sb_speed.setDouble(this.passThroughMotor.get());
+        }
+
+        /**
+         * The subsystem reset button
+         */
+        if (sb_resetSubsystem.getBoolean(false)) { // default value of false
+            reset(); // reset
+            sb_resetSubsystem.setBoolean(false); // turn button back off
+        }
+
+        /**
+         * The reset-all all button
+         */
+        if (sb_resetAll.getBoolean(false)) {
+            reset();
+            sb_resetAll.setBoolean(false);
         }
     }
 }

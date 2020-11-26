@@ -36,8 +36,10 @@ public class Shooter extends SubsystemBase {
     private NetworkTableEntry sb_preset_line = tab.add("Line RPM", Constants.ShooterPresets.lineRPM).getEntry();
     private NetworkTableEntry sb_preset_trench = tab.add("Trench RPM", Constants.ShooterPresets.trenchRPM).getEntry();
     private NetworkTableEntry sb_preset_max = tab.add("Max RPM", Constants.ShooterPresets.maxRPM).getEntry();
+    private NetworkTableEntry sb_resetEncoder = tab.add("Reset Encoder", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+    private NetworkTableEntry sb_resetSubsystem = tab.add("Reset Shooter", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+    private NetworkTableEntry sb_resetAll = tab.add("Hard-Reset Everything", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
     private NetworkTableEntry debugButton = tab.add("Debug Mode?", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
-    
 
     /**
      * Creates a new Shooter
@@ -126,5 +128,25 @@ public class Shooter extends SubsystemBase {
         sb_status.setBoolean(this.isGood());
         sb_rpm.setDouble(this.shooterEncoder.getVelocity());
         sb_desiredRPM.setDouble(this.shooterPID.getSetpoint());
+        if (sb_resetEncoder.getBoolean(false)) {
+            shooterEncoder.setPosition(0);
+            sb_resetEncoder.setBoolean(false);
+        }
+
+        /**
+         * The subsystem reset button
+         */
+        if (sb_resetSubsystem.getBoolean(false)) { // default value of false
+            reset(); // reset
+            sb_resetSubsystem.setBoolean(false); // turn button back off
+        }
+
+        /**
+         * The reset-all all button
+         */
+        if (sb_resetAll.getBoolean(false)) {
+            reset();
+            sb_resetAll.setBoolean(false);
+        }
     }
 }

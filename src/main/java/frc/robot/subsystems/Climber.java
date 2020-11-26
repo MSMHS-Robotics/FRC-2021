@@ -27,6 +27,8 @@ public class Climber extends SubsystemBase {
     //private NetworkTableEntry sb_current = tab.add("Current Draw", 0).getEntry(); // not sure how to implement this, might need the PDP class back
     private NetworkTableEntry sb_climberSpeed = tab.add("Climb Motor Speed", 0).getEntry();
     private NetworkTableEntry sb_extendSpeed = tab.add("Extend Motor Speed", 0).getEntry();
+    private NetworkTableEntry sb_resetSubsystem = tab.add("Reset Climber", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+    private NetworkTableEntry sb_resetAll = tab.add("Hard-Reset Everything", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
     private NetworkTableEntry debugButton = tab.add("Debug Mode?", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
   
 
@@ -100,6 +102,22 @@ public class Climber extends SubsystemBase {
         if (debugButton.getBoolean(false)) { // if we're in debug mode
             sb_climberSpeed.setDouble(climberMotor.get()); // push extra information
             sb_extendSpeed.setDouble(extendMotor.get());
+        }
+
+        /**
+         * The subsystem reset button
+         */
+        if (sb_resetSubsystem.getBoolean(false)) { // default value of false
+            reset(); // reset
+            sb_resetSubsystem.setBoolean(false); // turn button back off
+        }
+
+        /**
+         * The reset-all all button
+         */
+        if (sb_resetAll.getBoolean(false)) {
+            reset();
+            sb_resetAll.setBoolean(false);
         }
     }
 }

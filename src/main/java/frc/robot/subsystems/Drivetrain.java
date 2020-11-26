@@ -60,7 +60,7 @@ public class Drivetrain extends SubsystemBase {
     private NetworkTableEntry sb_status = tab.add("Status", false).getEntry();
     private NetworkTableEntry sb_gyro = tab.add("Heading", 0).getEntry();
     private NetworkTableEntry sb_velocity = tab.add("Velocity", 0).getEntry();
-    private NetworkTableEntry sb_gyroReset = tab.add("Reset Gyro", false).getEntry(); //TODO add functionality to these
+    private NetworkTableEntry sb_gyroReset = tab.add("Reset Gyro", false).getEntry();
     private NetworkTableEntry sb_encoderReset = tab.add("Reset Encoders", false).getEntry();
     private NetworkTableEntry sb_leftY = tab.add("Left Stick Y", 0).getEntry();
     private NetworkTableEntry sb_rightY = tab.add("Right Stick Y", 0).getEntry();
@@ -68,6 +68,8 @@ public class Drivetrain extends SubsystemBase {
     private NetworkTableEntry sb_distance = tab.add("Encoder Distance", 0).getEntry();
     private NetworkTableEntry sb_leftSpeed = tab.add("Left Side Speed", 0).getEntry();
     private NetworkTableEntry sb_rightSpeed = tab.add("Right Side Speed", 0).getEntry();
+    private NetworkTableEntry sb_resetSubsystem = tab.add("Reset Drivetrain", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+    private NetworkTableEntry sb_resetAll = tab.add("Hard-Reset Everything", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
     private NetworkTableEntry debugButton = tab.add("Debug Mode?", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
     
     /**
@@ -301,6 +303,32 @@ public class Drivetrain extends SubsystemBase {
             sb_distance.setDouble(this.getEncoderAverage());
             sb_leftSpeed.setDouble(this.getLeftSpeed());
             sb_rightSpeed.setDouble(this.getRightSpeed());
+        }
+
+        /** If the reset button is pressed */
+        if (sb_gyroReset.getBoolean(false)) { // default value of not-pressed
+            resetGyro(); // reset
+            sb_gyroReset.setBoolean(false); // and turn button back off
+        } 
+        if (sb_encoderReset.getBoolean(false)) { // same thing here
+            resetEncoders();
+            sb_encoderReset.setBoolean(false);
+        }
+
+        /**
+         * The subsystem reset button
+         */
+        if (sb_resetSubsystem.getBoolean(false)) { // default value of false
+            hardReset(); // reset
+            sb_resetSubsystem.setBoolean(false); // turn button back off
+        }
+
+        /**
+         * The reset-all all button
+         */
+        if (sb_resetAll.getBoolean(false)) {
+            hardReset();
+            sb_resetAll.setBoolean(false);
         }
     }
 }

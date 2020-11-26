@@ -28,6 +28,8 @@ public class Intake extends SubsystemBase {
     private NetworkTableEntry sb_status = tab.add("Status", false).getEntry();
     private NetworkTableEntry sb_raised = tab.add("Intake Raised?", false).getEntry();
     private NetworkTableEntry sb_speed = tab.add("Intake Speed", 0).getEntry();
+    private NetworkTableEntry sb_resetSubsystem = tab.add("Reset Intake", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+    private NetworkTableEntry sb_resetAll = tab.add("Hard-Reset Everything", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
     private NetworkTableEntry debugButton = tab.add("Debug Mode?", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
 
     /**
@@ -119,6 +121,22 @@ public class Intake extends SubsystemBase {
         sb_raised.setBoolean(this.isIntakeRaised());
         if (debugButton.getBoolean(false)) {
             sb_speed.setDouble(this.getIntakeSpeed());
+        }
+
+        /**
+         * The subsystem reset button
+         */
+        if (sb_resetSubsystem.getBoolean(false)) { // default value of false
+            reset(); // reset
+            sb_resetSubsystem.setBoolean(false); // turn button back off
+        }
+
+        /**
+         * The reset-all all button
+         */
+        if (sb_resetAll.getBoolean(false)) {
+            reset();
+            sb_resetAll.setBoolean(false);
         }
     }
 }

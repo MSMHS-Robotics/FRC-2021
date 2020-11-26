@@ -26,8 +26,8 @@ public class PassThrough extends SubsystemBase {
     /**
      * Creates a new PassThrough.
      */
-    public PassThrough() {
-        if (Constants.unitTests) {
+    public PassThrough(boolean unitTests) {
+        if (unitTests) {
             passThroughMotor = new RocketTalon_T(Constants.passThrough_p);
         } else {
             passThroughMotor = new RocketTalon(Constants.passThrough_p);

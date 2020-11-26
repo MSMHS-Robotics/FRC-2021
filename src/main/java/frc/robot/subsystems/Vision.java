@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Vision extends SubsystemBase {
-    private boolean aligned = false;
     private boolean zoom = false;
     private NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     

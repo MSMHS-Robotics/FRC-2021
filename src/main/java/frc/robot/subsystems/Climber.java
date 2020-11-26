@@ -30,8 +30,8 @@ public class Climber extends SubsystemBase {
     private NetworkTableEntry debugButton = tab.add("Debug Mode?", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
   
 
-    public Climber() {
-        if (Constants.unitTests) {
+    public Climber(boolean unitTests) {
+        if (unitTests) {
             climberMotor = new RocketTalon_T(Constants.climber_p);
             extendMotor = new RocketTalon_T(Constants.climberExtend_p);
             limitSwitch = new RocketDigitalInput_T(Constants.limitSwitch_p);

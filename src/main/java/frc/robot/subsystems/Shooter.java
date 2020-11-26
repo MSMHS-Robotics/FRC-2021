@@ -42,8 +42,8 @@ public class Shooter extends SubsystemBase {
     /**
      * Creates a new Shooter
      */
-    public Shooter() {
-        if (Constants.unitTests) {
+    public Shooter(boolean unitTests) {
+        if (unitTests) {
             shooterMotor = new RocketSparkMAX_T(Constants.shooter1_p);
             shooterFollowerMotor = new RocketSparkMAX_T(Constants.shooter2_p);
             triggerMotor = new RocketSparkMAX_T(Constants.trigger_p);

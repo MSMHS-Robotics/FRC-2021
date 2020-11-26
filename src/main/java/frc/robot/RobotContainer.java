@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.climber.ClimbCommand;
+import frc.robot.commands.climber.ExtendClimberCommand;
 import frc.robot.commands.intake.LowerIntakeCommand;
 import frc.robot.commands.intake.RaiseIntakeCommand;
 import frc.robot.commands.intake.SetIntakeCommand;
@@ -59,11 +61,11 @@ public class RobotContainer {
     private JoystickButton start2 = new JoystickButton(gamepad2, 8);
 
     // The robot's subsystems and commands are defined here...
-    private final Climber climber = new Climber();
-    private final Drivetrain drivetrain = new Drivetrain();
-    private final Intake intake = new Intake();
-    private final PassThrough passThrough = new PassThrough();
-    private final Shooter shooter = new Shooter();
+    private final Climber climber = new Climber(false);
+    private final Drivetrain drivetrain = new Drivetrain(false);
+    private final Intake intake = new Intake(false);
+    private final PassThrough passThrough = new PassThrough(false);
+    private final Shooter shooter = new Shooter(false);
     private final Vision vision = new Vision();
     
     private final RaiseIntakeCommand raiseIntake = new RaiseIntakeCommand(intake);
@@ -74,6 +76,10 @@ public class RobotContainer {
     private final SetPassThroughCommand indexIn = new SetPassThroughCommand(passThrough, 1);
 
     private final WarmUpCommand warmUp = new WarmUpCommand(shooter, gamepad1, vision);
+    private final WarmUpCommand warmUp2 = new WarmUpCommand(shooter, gamepad2, vision);
+
+    private final ExtendClimberCommand extendClimber = new ExtendClimberCommand(climber);
+    private final ClimbCommand climb = new ClimbCommand(climber);
 
     // The same janky joystick stuff from last year
     private final RunCommand runDrivetrain = new RunCommand(() -> drivetrain.drive(gamepad1.getRawAxis(1), gamepad1.getRawAxis(5)), drivetrain);
@@ -99,6 +105,10 @@ public class RobotContainer {
         yButton.whenPressed(raiseIntake);
 
         bButton.whileHeld(warmUp);
+        bButton2.whileHeld(warmUp2);
+
+        xButton2.whenPressed(extendClimber);
+        yButton2.whenPressed(climb);
     }
 
     /**

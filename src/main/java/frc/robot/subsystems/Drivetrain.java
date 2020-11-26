@@ -73,8 +73,8 @@ public class Drivetrain extends SubsystemBase {
     /**
      * Creates a new drivetrain subsystem, which is kinda needed to move
      */
-    public Drivetrain() {
-        if (Constants.unitTests) {
+    public Drivetrain(boolean unitTests) {
+        if (unitTests) {
             left1 = new RocketSparkMAX_T(Constants.left1_p);
             left2 = new RocketSparkMAX_T(Constants.left2_p);
             left3 = new RocketSparkMAX_T(Constants.left3_p);

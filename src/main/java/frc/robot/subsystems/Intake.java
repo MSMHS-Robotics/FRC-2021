@@ -35,8 +35,8 @@ public class Intake extends SubsystemBase {
      * intake/outake)
      * 
      */
-    public Intake() {
-        if (Constants.unitTests) {
+    public Intake(boolean unitTests) {
+        if (unitTests) {
             motor = new RocketTalon_T(Constants.intake_p);
             positionMotor = new RocketTalon_T(Constants.intakePosition_p);
             positionPot = new RocketPotentiometer_T(Constants.intakePositionPot_p, Constants.intake.fullRange, Constants.intake.offset);

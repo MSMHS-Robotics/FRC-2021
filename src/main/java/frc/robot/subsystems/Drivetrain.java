@@ -46,7 +46,6 @@ public class Drivetrain extends SubsystemBase {
     private RocketCANEncoderInterface right2Encoder;
     private RocketCANEncoderInterface right3Encoder;
 
-
     private SpeedControllerGroup leftSide;
     private SpeedControllerGroup rightSide;
     private double leftStickY = 0;
@@ -55,6 +54,7 @@ public class Drivetrain extends SubsystemBase {
     
     private PIDController turningPID;
     private PIDController distancePID;
+    private PIDController alignPID;
 
     private ShuffleboardTab tab = Shuffleboard.getTab("tab");
     private NetworkTableEntry sb_status = tab.add("Status", false).getEntry();
@@ -131,6 +131,7 @@ public class Drivetrain extends SubsystemBase {
 
         turningPID = new PIDController(Constants.turningPID.kP, Constants.turningPID.kI, Constants.turningPID.kD);
         distancePID = new PIDController(Constants.distancePID.kP, Constants.distancePID.kI, Constants.distancePID.kD);
+        alignPID = new PIDController(Constants.alignPID.kP, Constants.alignPID.kI, Constants.alignPID.kD);
     }
 
     /**
@@ -163,6 +164,10 @@ public class Drivetrain extends SubsystemBase {
     public boolean driveDistance(double distance, double lastHeading) {
         diffDrive.arcadeDrive(distancePID.calculate(getEncoderAverage(), distance), turningPID.calculate(gyro.getAngle(), lastHeading));
         return distancePID.atSetpoint();
+    }
+
+    public void visionAlign(double xOffset) {
+        diffDrive.arcadeDrive(0, alignPID.calculate(xOffset, 0), false);
     }
 
     /**

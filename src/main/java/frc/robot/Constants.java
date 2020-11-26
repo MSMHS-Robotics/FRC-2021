@@ -73,6 +73,13 @@ public final class Constants {
         public static final double kI = 0;
         public static final double kD = 0;
     }
+
+    /** A class to hold the constants of the align PID */
+    public static final class alignPID {
+        public static final double kP = 0.019;
+        public static final double kI = 0.08;
+        public static final double kD = 0.0085;
+    }
     
     /** A class to hold the constants of the shooter PID */
     public static final class shooterPID {

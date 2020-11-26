@@ -71,6 +71,7 @@ public class RobotContainer {
     private final RaiseIntakeCommand raiseIntake = new RaiseIntakeCommand(intake);
     private final LowerIntakeCommand lowerIntake = new LowerIntakeCommand(intake);
     private final SetIntakeCommand intakeIn = new SetIntakeCommand(intake, 1);
+    private final SetIntakeCommand intakeStop = new SetIntakeCommand(intake, 0);
     private final SetIntakeCommand intakeOut = new SetIntakeCommand(intake, -1);
 
     private final SetPassThroughCommand indexIn = new SetPassThroughCommand(passThrough, 1);
@@ -101,6 +102,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         rightBumper.whenPressed(lowerIntake);
         rightBumper.whenPressed(intakeIn);
+        rightBumper.whenReleased(intakeStop);
         rightBumper.whileHeld(indexIn);
         yButton.whenPressed(raiseIntake);
 

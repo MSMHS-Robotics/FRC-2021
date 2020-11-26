@@ -21,8 +21,8 @@ public class SetIntakeCommand extends CommandBase {
     }
 
     @Override
-    public void execute() {
-        intake.setIntake(power);
+    public void end(boolean inturrupted) {
+        intake.setIntake(0);
     }
 
     @Override

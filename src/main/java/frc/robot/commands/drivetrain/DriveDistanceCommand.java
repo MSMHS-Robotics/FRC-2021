@@ -25,6 +25,7 @@ public class DriveDistanceCommand extends CommandBase {
     @Override
     public void initialize() {
         lastHeading = drivetrain.getHeading();
+        drivetrain.resetEncoders();
     }
 
     /** drive on that heading until we reach a distance */

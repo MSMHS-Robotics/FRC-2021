@@ -100,6 +100,5 @@ public class RocketTalon_T implements RocketMotor {
     /** Ignore this, necessary to not get an error */
     @Override
     public void pidWrite(double output) {
-        // TODO fix later
     }
 }

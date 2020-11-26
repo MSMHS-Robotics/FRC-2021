@@ -72,30 +72,20 @@ public class Drivetrain extends SubsystemBase {
     
     /**
      * Creates a new drivetrain subsystem, which is kinda needed to move
-     * @param left1_p the port for the 1st left motor
-     * @param left2_p the port for the 2nd left motor
-     * @param left3_p the port for the 3rd left motor
-     * @param right1_p the port for the 1st right motor
-     * @param right2_p the port for the 2nd right motor
-     * @param right3_p the port for the 3rd right motor
-     * @param leftEncoder1_p the 1st port for the left through-bore encoder
-     * @param leftEncoder2_p the 2nd port for the left though-bore encoder
-     * @param rightEncoder1_p the 1st port for the right though-bore encoder
-     * @param rightEncoder2_p the 2nd port for the right though-bore encoder
      */
-    public Drivetrain(int left1_p, int left2_p, int left3_p, int right1_p, int right2_p, int right3_p, int leftEncoder1_p, int leftEncoder2_p, int rightEncoder1_p, int rightEncoder2_p) {
-        if (Constants.unitTests) {
-            left1 = new RocketSparkMAX_T(left1_p);
-            left2 = new RocketSparkMAX_T(left2_p);
-            left3 = new RocketSparkMAX_T(left3_p);
-            right1 = new RocketSparkMAX_T(right1_p);
-            right2 = new RocketSparkMAX_T(right2_p);
-            right3 = new RocketSparkMAX_T(right3_p);
+    public Drivetrain(boolean unitTests) {
+        if (unitTests) {
+            left1 = new RocketSparkMAX_T(Constants.left1_p);
+            left2 = new RocketSparkMAX_T(Constants.left2_p);
+            left3 = new RocketSparkMAX_T(Constants.left3_p);
+            right1 = new RocketSparkMAX_T(Constants.right1_p);
+            right2 = new RocketSparkMAX_T(Constants.right2_p);
+            right3 = new RocketSparkMAX_T(Constants.right3_p);
 
             gyro = new RocketGyro_T(Port.kMXP); // not sure how useful this'll be
 
-            leftEncoder = new RocketEncoder_T(leftEncoder1_p, leftEncoder2_p); // or what the heck these'll do
-            rightEncoder = new RocketEncoder_T(rightEncoder1_p, rightEncoder2_p);
+            leftEncoder = new RocketEncoder_T(Constants.leftEncoder1_p, Constants.leftEncoder2_p); // or what the heck these'll do
+            rightEncoder = new RocketEncoder_T(Constants.rightEncoder1_p,Constants.rightEncoder2_p);
 
             left1Encoder = new RocketCANEncoder_T((RocketSparkMAX_T) left1); // _this_ part can only end in misery and suffering
             left2Encoder = new RocketCANEncoder_T((RocketSparkMAX_T) left2); // and utter destruction and pain and hate and ...
@@ -104,17 +94,17 @@ public class Drivetrain extends SubsystemBase {
             right2Encoder = new RocketCANEncoder_T((RocketSparkMAX_T) right2);
             right3Encoder = new RocketCANEncoder_T((RocketSparkMAX_T) right3);
         } else {
-            left1 = new RocketSparkMAX(left1_p);
-            left2 = new RocketSparkMAX(left2_p);
-            left3 = new RocketSparkMAX(left3_p);
-            right1 = new RocketSparkMAX(right1_p);
-            right2 = new RocketSparkMAX(right2_p);
-            right3 = new RocketSparkMAX(right3_p);
+            left1 = new RocketSparkMAX(Constants.left1_p);
+            left2 = new RocketSparkMAX(Constants.left2_p);
+            left3 = new RocketSparkMAX(Constants.left3_p);
+            right1 = new RocketSparkMAX(Constants.right1_p);
+            right2 = new RocketSparkMAX(Constants.right2_p);
+            right3 = new RocketSparkMAX(Constants.right3_p);
 
             gyro = new RocketGyro(Port.kMXP); // this is one port that def won't change
 
-            leftEncoder = new Encoder(leftEncoder1_p, leftEncoder2_p);
-            rightEncoder = new Encoder(rightEncoder1_p, rightEncoder2_p);
+            leftEncoder = new Encoder(Constants.leftEncoder1_p, Constants.leftEncoder2_p);
+            rightEncoder = new Encoder(Constants.rightEncoder1_p, Constants.rightEncoder2_p);
 
             left1Encoder = new RocketCANEncoder((CANSparkMax) left1);
             left2Encoder = new RocketCANEncoder((CANSparkMax) left2);

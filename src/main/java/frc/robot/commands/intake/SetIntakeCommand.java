@@ -1,6 +1,7 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Intake;
 
 public class SetIntakeCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -26,6 +27,6 @@ public class SetIntakeCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return intake.getIntakeSpeed() == power;
     }
 }

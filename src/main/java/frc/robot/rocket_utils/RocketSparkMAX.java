@@ -92,6 +92,5 @@ public class RocketSparkMAX implements RocketMotor {
 
     @Override
     public void pidWrite(double output) {
-        // TODO fix this
     }
 }

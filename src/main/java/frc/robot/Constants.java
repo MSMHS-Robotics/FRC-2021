@@ -34,6 +34,7 @@ public final class Constants {
     // climber
     public static final int climber_p = 12;
     public static final int climberExtend_p = 13;
+    public static final int limitSwitch_p = 1; // need to change
 
     /**
      * Define the PWM port numbers for sensors and such here. Makes it a little easier to manage
@@ -52,6 +53,7 @@ public final class Constants {
     public static final double encoderTicksPerRev = 1; //TODO change to actual value
     public static final double wheelDiameter = 4.0;
 
+    
     /**
      * This variable says whether we're running unit tests or not.
      * Setting it to true will make all of the subsystems use "fake" motors and stuff.
@@ -64,14 +66,14 @@ public final class Constants {
         public static final double kI = 0;
         public static final double kD = 0;
     }
-
+    
     /** A class to hold the constants of the distance PID */
     public static final class distancePID {
         public static final double kP = 1;
         public static final double kI = 0;
         public static final double kD = 0;
     }
-
+    
     /** A class to hold the constants of the shooter PID */
     public static final class shooterPID {
         public static final double kP = 0.00007;
@@ -79,7 +81,7 @@ public final class Constants {
         public static final double kD = 0.001;
         public static final double kFF = 0.000006;
     }
-
+    
     /** A class to hold the constants of some intake stuff */
     public static final class intake {
         public static final double kP = 1;
@@ -96,5 +98,15 @@ public final class Constants {
         public static final double lineRPM = 3150; // (shooting from the starting line)
         public static final double trenchRPM = 3400; // (shooting from the trench run)
         public static final double maxRPM = 6000; // (shooting at a demo or when screwing around)
+    }
+    
+    /**
+     * Vision stuff
+     */
+    public static final class visionConstants {
+        public static final double visionThreshold = 0.01;
+        public static final double shooterAngle = 45; // degrees
+        public static final double accel_due_to_gravity = -9; // m/s^2
+        public static final double limelight_height = 20; // I think it's ~20 inches... will have to measure later
     }
 }

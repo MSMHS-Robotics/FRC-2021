@@ -25,6 +25,7 @@ public class Shooter extends SubsystemBase {
     private RocketMotor triggerMotor;
     private RocketCANEncoderInterface shooterEncoder;
 
+    private Boolean isIdling = true;
     private PIDController shooterPID;
 
     private ShuffleboardTab tab = Shuffleboard.getTab("tab");
@@ -40,22 +41,18 @@ public class Shooter extends SubsystemBase {
 
     /**
      * Creates a new Shooter
-     * 
-     * @param shooter1_p the port for the first shooter motor
-     * @param shooter2_p the port for the second/follower shooter motor
-     * @param trigger_p  the port for the trigger motor
      */
-    public Shooter(int shooter1_p, int shooter2_p, int trigger_p) {
-        if (Constants.unitTests) {
-            shooterMotor = new RocketSparkMAX_T(shooter1_p);
-            shooterFollowerMotor = new RocketSparkMAX_T(shooter2_p);
-            triggerMotor = new RocketSparkMAX_T(trigger_p);
+    public Shooter(boolean unitTests) {
+        if (unitTests) {
+            shooterMotor = new RocketSparkMAX_T(Constants.shooter1_p);
+            shooterFollowerMotor = new RocketSparkMAX_T(Constants.shooter2_p);
+            triggerMotor = new RocketSparkMAX_T(Constants.trigger_p);
 
             shooterEncoder = new RocketCANEncoder_T((RocketSparkMAX_T) shooterMotor);
         } else {
-            shooterMotor = new RocketSparkMAX(shooter1_p);
-            shooterFollowerMotor = new RocketSparkMAX(shooter2_p);
-            triggerMotor = new RocketSparkMAX(trigger_p);
+            shooterMotor = new RocketSparkMAX(Constants.shooter1_p);
+            shooterFollowerMotor = new RocketSparkMAX(Constants.shooter2_p);
+            triggerMotor = new RocketSparkMAX(Constants.trigger_p);
 
             shooterEncoder = new RocketCANEncoder((CANSparkMax) shooterMotor);
         }
@@ -70,6 +67,22 @@ public class Shooter extends SubsystemBase {
      */
     public void setTrigger(double power) {
         triggerMotor.set(power);
+    }
+
+    /**
+     * A method to get the trigger motor's speed
+     * @return the last set speed of the trigger motor
+     */
+    public double getTriggerSpeed() {
+        return triggerMotor.get();
+    }
+
+    /**
+     * Sets the state of the shooter (idling or not)
+     * @param state the state you want the shooter set to
+     */
+    public void setIdle(boolean state) {
+        isIdling = state;
     }
 
     /**
@@ -106,6 +119,10 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
+        if (isIdling) {
+            setTrigger(-0.5);
+        }
+
         sb_status.setBoolean(this.isGood());
         sb_rpm.setDouble(this.shooterEncoder.getVelocity());
         sb_desiredRPM.setDouble(this.shooterPID.getSetpoint());

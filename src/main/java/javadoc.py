@@ -37,6 +37,12 @@ class Parameter:
     def __init__(self, name, type_):
         self.name = name
         self.type_ = type_
+    
+    def __str__(self):
+        return self.type_ + " " + self.name
+    
+    def __repr__(self):
+        return self.__str__()
 
 class Field:
     def __init__(self, name, type_, level):
@@ -93,18 +99,26 @@ for javaFile in fileList[1:]:
                 param = param.split(" ")
                 if param != [""]:
                     method_params.append(Parameter(param[1], param[0]))
-                print(method_params)
-
             methods.append(Method(method_name, class_name, method_level, method_type, method_params, "comments currently not implemented"))
 
         fields = []
-        for field in fields:
+        for field in field_match:
             field_level = field[0]
             field_type = field[1]
             field_name = field[2]
             fields.append(Field(field_name, field_type, field_level)) # change below so we separate parents and interfaces
         classes.append(JavaClass(class_name, package_match[0], class_type, methods, fields, class_match[0][5], class_match[0][5]))
     except Exception as e:
-        print("Error ocurred while parsing: " + javaFile.name + " : " + str(e))
-#for item in classes:
-#    print(item)
+        print("Error ocurred while parsing: " + javaFile.name)
+
+# data has been processed and packaged. Now we need to generate html
+#os.makedirs("doc/frc/robot/subsystems") # this works
+
+print("Classes found: " + str(len(classes)))        
+
+# make all of the folders
+for item in classes:
+    try:
+        os.makedirs("doc/" + item.package.replace(".", "/"))
+    except FileExistsError:
+        print("moving on...")

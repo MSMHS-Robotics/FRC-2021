@@ -122,3 +122,28 @@ for item in classes:
         os.makedirs("doc/" + item.package.replace(".", "/"))
     except FileExistsError:
         print("Using existing folder...")
+
+for item in classes:
+    package_url = "doc/" + item.package.replace(".", "/")
+    class_name = item.name
+    package = item.package
+    class_name_type = item.type_ + " " + item.name
+    interfaces = str(item.interfaces).replace("[", "").replace("]", "")
+    class_declaration = "public " + class_name_type
+    class_desc = item.description
+    
+    content = "<!DOCTYPE html><html><head><title>" + class_name + "</title></head><body>"
+    content += "<body><nav><ul><li><a href=\"all_classes.html\">ALL CLASSES</a></li>"
+    content += "<li><a href=\"" + package_url + ">PACKAGE</a></li></ul></nav>"
+    content += "<div id=\"class_summary\"><p id=\"package_declaration\"><strong>Package</strong> <a href=\"" + package_url + "\">" + package + "</a></p>"
+    content += '<p id="classname">' + class_name_type + '</p>'
+    content += 'p id="tree"><ul class="tree"><li>' + TODO + '</ul></ul></p>'
+    content += '<p id="interfaces">All implemented interfaces: ' + interfaces + '</p>'
+    content += '<p id="subclasses">All known subclasses: ' + subclasses + '</p>'
+    content += '<p id="implementations">All known implementations: ' + implementations + '</p></div>'
+    content += '<div id="class"><p id="class_declaration"><pre>' + class_declaration + '</pre></p>'
+    content += '<p id="class_desc">' + class_desc + '</p></div>'
+    content += '<div id="field_summary"><h1>Field Summary</h1><table><tr><th>Modifier and Type</th><th>Name</th><th>Description</th></tr>'
+    
+    with open(package_url + class_name + ".html", "w") as f:
+        f.write(content)

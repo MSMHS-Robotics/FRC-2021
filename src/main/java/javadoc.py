@@ -121,4 +121,4 @@ for item in classes:
     try:
         os.makedirs("doc/" + item.package.replace(".", "/"))
     except FileExistsError:
-        print("moving on...")
+        print("Using existing folder...")

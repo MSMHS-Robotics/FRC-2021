@@ -22,7 +22,7 @@ public class WarmUpAutoCommand extends CommandBase {
      * @param rpm the speed you want to warm up to
      * @param vision a vision subsystem used by this command
      */
-    public WarmUpAutoCommand(Shooter shooter, Double rpm, Vision vision) {
+    public WarmUpAutoCommand(Shooter shooter, Vision vision, Double rpm) {
         this.shooter = shooter;
         this.vision = vision;
         this.rpm = rpm;

@@ -8,7 +8,7 @@ public class ClimbCommand extends CommandBase {
     private final Climber climber;
 
     /**
-     * Creates a new ClimbCommand command
+     * Creates a new ClimbCommand command. Pretty much justs accelerates the climber to attack speed
      * @param climber a climber subsystem to be used by this command
      */
     public ClimbCommand(Climber climber) {

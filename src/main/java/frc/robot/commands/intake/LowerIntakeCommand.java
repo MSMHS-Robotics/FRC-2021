@@ -8,7 +8,7 @@ public class LowerIntakeCommand extends CommandBase {
     private final Intake intake;
 
     /**
-     * Creates a new LowerIntakeCommand command
+     * Creates a new LowerIntakeCommand command. Sets the intake to be lowered in intake's periodic
      * @param intake an intake subsystem to be used by this command
      */
     public LowerIntakeCommand(Intake intake) {

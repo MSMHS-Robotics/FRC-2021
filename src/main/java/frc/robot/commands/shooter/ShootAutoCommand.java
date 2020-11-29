@@ -16,7 +16,8 @@ public class ShootAutoCommand extends CommandBase {
     private double rpm;
 
     /**
-     * Creates a new ShootAutoCommand command
+     * Creates a new ShootAutoCommand command. Warms up the shooter to the given rpm and then shoots.
+     * Ends immediately afterwards though...
      * 
      * @param shooter a shooter subsystem to be used by this command
      * @param vision a vision subsystem to be used by this command (for the distance to the goal)

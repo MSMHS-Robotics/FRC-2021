@@ -9,7 +9,7 @@ public class SetPassThroughCommand extends CommandBase {
     private double power = 0;
 
     /**
-     * Creates a new SetPassThrough command
+     * Creates a new SetPassThrough command. Runs the pass through at a given speed
      * @param passThrough a pass-through subsystem to be used by this command
      * @param power the speed you want to run the pass through at (negative is outwards)
      */

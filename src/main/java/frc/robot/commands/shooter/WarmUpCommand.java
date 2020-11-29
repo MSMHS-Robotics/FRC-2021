@@ -17,10 +17,11 @@ public class WarmUpCommand extends CommandBase {
      * Creates a new WarmUpCommand command
      * @param shooter a shooter subsystem to be used by this command
      */
-    public WarmUpCommand(Shooter shooter, Joystick joystick, Vision vision) {
+    public WarmUpCommand(Shooter shooter, Vision vision, Joystick joystick) {
         this.shooter = shooter;
+        this.vision = vision;
         this.joystick = joystick;
-        addRequirements(shooter);
+        addRequirements(shooter, vision);
     }
 
     @Override

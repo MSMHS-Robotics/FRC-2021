@@ -212,7 +212,7 @@ public class Drivetrain extends SubsystemBase {
      * A function that resets pretty much everything. Probably best practice to run this before a match
      * Also sets all motors to 0
      */
-    public void hardReset() {
+    public void reset() {
         resetEncoders();
         turningPIDReset();
         distancePIDReset();
@@ -319,7 +319,7 @@ public class Drivetrain extends SubsystemBase {
          * The subsystem reset button
          */
         if (sb_resetSubsystem.getBoolean(false)) { // default value of false
-            hardReset(); // reset
+            reset(); // reset
             sb_resetSubsystem.setBoolean(false); // turn button back off
         }
 
@@ -327,7 +327,7 @@ public class Drivetrain extends SubsystemBase {
          * The reset-all all button
          */
         if (sb_resetAll.getBoolean(false)) {
-            hardReset();
+            reset();
             sb_resetAll.setBoolean(false);
         }
     }

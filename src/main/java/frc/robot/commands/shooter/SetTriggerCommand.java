@@ -9,7 +9,7 @@ public class SetTriggerCommand extends CommandBase {
     private double power = 0;
 
     /**
-     * Creates a new SetTrigger command
+     * Creates a new SetTrigger command. Runs the trigger at the given speed
      * @param shooter a shooter subsystem to be used by this command
      * @param power the speed you want to run the trigger wheel at, negative is outwards
      */

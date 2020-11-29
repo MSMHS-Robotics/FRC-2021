@@ -61,7 +61,7 @@ public class RobotContainer {
     private JoystickButton start = new JoystickButton(gamepad1, 8);
     private JoystickButton start2 = new JoystickButton(gamepad2, 8);
 
-    // The robot's subsystems and commands are defined here...
+    /** Subsystsm */
     private final Climber climber = new Climber(false);
     private final Drivetrain drivetrain = new Drivetrain(false);
     private final Intake intake = new Intake(false);
@@ -69,17 +69,24 @@ public class RobotContainer {
     private final Shooter shooter = new Shooter(false);
     private final Vision vision = new Vision();
     
+    /** 
+     * Commands
+     */
+    /** Intake */
     private final RaiseIntakeCommand raiseIntake = new RaiseIntakeCommand(intake);
     private final LowerIntakeCommand lowerIntake = new LowerIntakeCommand(intake);
     private final SetIntakeCommand intakeIn = new SetIntakeCommand(intake, 1);
     private final SetIntakeCommand intakeStop = new SetIntakeCommand(intake, 0);
     private final SetIntakeCommand intakeOut = new SetIntakeCommand(intake, -1);
 
+    /** Pass-through */
     private final SetPassThroughCommand indexIn = new SetPassThroughCommand(passThrough, 1);
 
+    /** Shooter */
     private final ShootCommand shoot = new ShootCommand(shooter, vision, gamepad1);
-    private final WarmUpCommand warmUp2 = new WarmUpCommand(shooter, gamepad2, vision);
+    private final WarmUpCommand warmUp2 = new WarmUpCommand(shooter, vision, gamepad2);
 
+    /** Climber */
     private final ExtendClimberCommand extendClimber = new ExtendClimberCommand(climber);
     private final ClimbCommand climb = new ClimbCommand(climber);
 

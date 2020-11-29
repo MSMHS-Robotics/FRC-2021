@@ -18,7 +18,8 @@ public class RocketSparkMAX_T implements RocketMotor {
     }
 
     /**
-     * Sets the motor to run at a certain speed
+     * Sets the motor to run at a certain speed. Negative is reverse, range is from -1 to 1
+     * 
      * @param power the speed you want to run the motor at
      */
     @Override
@@ -31,7 +32,7 @@ public class RocketSparkMAX_T implements RocketMotor {
 
     /**
      * Returns the last speed the motor was set at
-     * @return the last power the motor was set to
+     * @return the last speed the motor was set to
      */
     @Override
     public double get() {
@@ -39,10 +40,10 @@ public class RocketSparkMAX_T implements RocketMotor {
     }
 
     /**
-     * sets whether the motor is inverted or not.
-     * This is useful when running a drivetrain, because forwards for the left
-     * would be backwards for the right because the motors are facing opposite directions
-     * @param isInverted whether the motor is inverted, true being inverted
+     * sets whether the motor is inverted or not This is equivalent to multiplying
+     * all subsequent calls to set() by -1
+     * 
+     * @param isInverted whether the motor should be inverted or not, true being inverted
      */
     @Override
     public void setInverted(boolean isInverted) {

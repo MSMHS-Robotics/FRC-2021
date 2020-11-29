@@ -17,8 +17,9 @@ public class RocketSparkMAX implements RocketMotor {
     }
 
     /**
-     * Sets the motor to the given power
-     * @return the speed you want to run the motor at
+     * Sets the motor to run at a certain speed. Negative is reverse, range is from -1 to 1
+     * 
+     * @param power the speed you want to run the motor at
      */
     @Override
     public void set(double power) {
@@ -28,8 +29,8 @@ public class RocketSparkMAX implements RocketMotor {
     }
 
     /**
-     * Gets the last set power of the motor
-     * @return the current speed the motor is set at
+     * Returns the last speed the motor was set at
+     * @return the last speed the motor was set to
      */
     @Override
     public double get() {
@@ -41,8 +42,9 @@ public class RocketSparkMAX implements RocketMotor {
     }
 
     /**
-     * sets whether the motor is inverted or not
-     * This is equivalent to multiplying all subsequent calls to set() by -1
+     * sets whether the motor is inverted or not This is equivalent to multiplying
+     * all subsequent calls to set() by -1
+     * 
      * @param isInverted whether the motor should be inverted or not, true being inverted
      */
     @Override
@@ -53,9 +55,8 @@ public class RocketSparkMAX implements RocketMotor {
     }
 
     /**
-     * Gets whether the motor has been set to be inverted or not
-     * True means it has been
-     * @return a boolean indicating whether the motor is inverted or not
+     * returns whether the motor is inverted or not
+     * @return if the motor is inverted or not
      */
     public boolean getInverted() {
         if (motor != null) {
@@ -65,7 +66,10 @@ public class RocketSparkMAX implements RocketMotor {
         }
     }
 
-    /** Disables the motor. idk what this does */
+    /**
+     * Not really sure what this is supposed to do but we have to implement it
+     * because of implementing the SpeedController interface
+     */
     @Override
     public void disable() {
         if (motor != null) {
@@ -73,7 +77,9 @@ public class RocketSparkMAX implements RocketMotor {
         }
     }
 
-    /** Stops the motor */
+    /**
+     * stops the motor, hence the name
+     */
     @Override
     public void stopMotor() {
         if (motor != null) {
@@ -82,14 +88,16 @@ public class RocketSparkMAX implements RocketMotor {
     }
 
     /**
-     * Returns whether the motor is null or not
-     * Seeing as the point of this class is to prevent NullPointerExceptions at every turn,
-     * we need some way to know if the CAN wires have come unplugged
+     * Returns whether the motor is *not* null
+     * This is useful since we're suppressing null warnings in the other RocketSparkMAX class
+     * And still want to know (in a less crash-and-burn-y way) if the motor is unplugged or not
+     * @return whether the motor exists or not
      */
     public boolean isMotorNotNull() {
         return motor != null;
     }
 
+    /** Ignore this, necessary to not get an error */
     @Override
     public void pidWrite(double output) {
     }

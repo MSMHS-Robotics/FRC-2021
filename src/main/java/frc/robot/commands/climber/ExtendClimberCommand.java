@@ -8,7 +8,7 @@ public class ExtendClimberCommand extends CommandBase {
     private final Climber climber;
 
     /**
-     * Creates a new ExtendClimberCommand command
+     * Creates a new ExtendClimberCommand command. Sets the climber to be extended in climber's periodic
      * @param climber a climber subsystem to be used by this command
      */
     public ExtendClimberCommand(Climber climber) {

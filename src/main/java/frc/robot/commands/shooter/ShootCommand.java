@@ -16,7 +16,7 @@ public class ShootCommand extends CommandBase {
     private boolean isWarmedUp = false;
 
     /**
-     * Creates a new ShootCommand command
+     * Creates a new ShootCommand command. Warms up the shooter and then spins ("pulls") the trigger
      * 
      * @param shooter a shooter subsystem to be used by this command
      * @param vision a vision subsystem to be used by this command (for the distance to the goal)

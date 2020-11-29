@@ -8,7 +8,7 @@ public class RaiseIntakeCommand extends CommandBase {
     private final Intake intake;
 
     /**
-     * Creates a new RaiseIntakeCommand command
+     * Creates a new RaiseIntakeCommand command. Sets the intake to be raised in intake's periodic
      * @param intake an intake subsystem to be used by this command
      */
     public RaiseIntakeCommand(Intake intake) {

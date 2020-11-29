@@ -30,6 +30,7 @@ public class Intake extends SubsystemBase {
     private NetworkTableEntry sb_speed = tab.add("Intake Speed", 0).getEntry();
     private NetworkTableEntry sb_resetSubsystem = tab.add("Reset Intake", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
     private NetworkTableEntry sb_resetAll = tab.add("Hard-Reset Everything", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+    private NetworkTableEntry sb_progressBar = tab.add("Intake Test Progress", 0).withWidget(BuiltInWidgets.kNumberBar).getEntry();
     private NetworkTableEntry debugButton = tab.add("Debug Mode?", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
 
     /**
@@ -101,6 +102,22 @@ public class Intake extends SubsystemBase {
     public void reset() {
         motor.set(0);
         positionMotor.set(0);
+    }
+
+    /**
+     * A method to set the intake's progress bar
+     * @param progress the number (as a decimal 0-1) you want the progress bar set to
+     */
+    public void setProgressBar(double progress) {
+        sb_progressBar.setDouble(progress);
+    }
+
+    /**
+     * A method to set the intake's pit test status
+     * @param status the message you want to post to Shuffleboard
+     */
+    public void setTestStatus(String status) {
+        sb_testStatus.setString(status);
     }
 
     /**

@@ -7,7 +7,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -18,6 +22,12 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+  private int autoIndex = 0;
+  private Boolean wasPressed = false;
+  private ShuffleboardTab autoTab = Shuffleboard.getTab("Auto Tab");
+  private NetworkTableEntry CurrentAuto = autoTab.addPersistent("Current Auto", "initializing").getEntry();
+  private Joystick gamepad1;
+    
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -31,6 +41,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    gamepad1 = m_robotContainer.getJoystick1();
   }
 
   /**
@@ -58,6 +69,19 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+    if (gamepad1.getPOV() == -1) {
+      wasPressed = false;
+    } else if (!wasPressed) {
+      if (gamepad1.getPOV() == 180) {
+        autoIndex++;
+        wasPressed = true;
+      } else if (gamepad1.getPOV() == 0) {
+        autoIndex--;
+        wasPressed = true;
+      }
+    }
+
+    CurrentAuto.setString(m_robotContainer.getAutoName(autoIndex));
   }
 
   /**
@@ -65,7 +89,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand(autoIndex);
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

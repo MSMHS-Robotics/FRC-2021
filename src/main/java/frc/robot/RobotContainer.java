@@ -7,12 +7,17 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
+import java.util.TreeMap;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.autonomous.DriveOffLineAuto;
+import frc.robot.autonomous.ThreeBallAuto;
 import frc.robot.commands.climber.ClimbCommand;
 import frc.robot.commands.climber.ExtendClimberCommand;
 import frc.robot.commands.intake.LowerIntakeCommand;
@@ -93,12 +98,23 @@ public class RobotContainer {
     // The same janky joystick stuff from last year
     private final RunCommand runDrivetrain = new RunCommand(() -> drivetrain.drive(gamepad1.getRawAxis(1), gamepad1.getRawAxis(5)), drivetrain);
 
+    //auto selector stuff (copied + pasted from last year's code)
+    private TreeMap<String, Command> autos = new TreeMap<String, Command>();
+    private ArrayList<String> autoNames;
+    private int curr_auto = 0;
+    private int lengthOfList;
+
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-      // Configure the button bindings
-      configureButtonBindings();
+        // Configure the button bindings
+        configureButtonBindings();
+
+        autos.put("Drive Off Line", new DriveOffLineAuto(drivetrain));
+        autos.put("3 Ball Auto", new ThreeBallAuto(drivetrain, intake, shooter, vision));
+        autoNames = new ArrayList<>(autos.keySet());
+        lengthOfList = autoNames.size();
     }
 
     /**
@@ -124,11 +140,19 @@ public class RobotContainer {
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
+     * @param index the index (starting at 0) of the command you want to run in auto from the list of autos
      * @return the command to run in autonomous
      */
-    public Command getAutonomousCommand() {
-       // An ExampleCommand will run in autonomous
-        // return m_autoCommand;
-        return null;
+    public Command getAutonomousCommand(int index) {
+       return autos.get(autoNames.get(index));
+    }
+
+    public String getAutoName(int index) {
+        return autoNames.get(index);
+    }
+
+    /** Need this for the auto chooser */
+    public Joystick getJoystick1() {
+        return gamepad1;
     }
 }

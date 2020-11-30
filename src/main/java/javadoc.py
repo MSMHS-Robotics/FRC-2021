@@ -14,6 +14,8 @@ class JavaClass:
         self.fields = fields # a list of fields
         self.parents = parents # a list of what the class inherits
         self.interfaces = interfaces # a list of what the class implements
+        self.description = "TODO"
+        self.constructor = Constructor("TODO", "TODO")
     
     def __str__(self):
         string = "name: " + self.name + "\npackage: " + self.package + "\ntype: " + self.type_ + "\nparents/interfaces: " + self.parents + "\nmethods: "
@@ -32,6 +34,7 @@ class Method:
         self.returnType = returnType
         self.parameters = parameters
         self.comments = comments
+        self.description = comments
 
 class Parameter:
     def __init__(self, name, type_):
@@ -49,6 +52,11 @@ class Field:
         self.name = name
         self.type_ = type_
         self.level = level
+
+class Constructor:
+    def __init__(self, declaration, description):
+        self.declaration = declaration
+        self.description = description
 
 def walk():
     file_list = {}
@@ -68,7 +76,7 @@ PACKAGE_RE = re.compile(r"(?<=package ).*(?=\;)", re.M)
 METHOD_RE = re.compile(r"(private|public) ([A-z]+?) ([A-z]+?(?=\())(.+(?=\) \{))", re.M) # group 1 is access, group 2 is return type, group 3 is name, group 4 is parameters
 FIELD_RE = re.compile(r"(private|public) ([A-z]+) (\w+\;|\w+ (?==))", re.M) # group 1 is access, group 2 type, group 3 name (need to strip the last char off of group 3)
 INTERFACE_RE = re.compile(r"(?<=implements ).+(?= \{)") # this can't handle multiple implements, so kinda jank for now
-for javaFile in fileList[1:]:
+for javaFile in fileList[2:]:
     with open(javaFile.path[2:] + "/" + javaFile.name) as f:
         content = f.read()
     try:
@@ -124,34 +132,54 @@ for item in classes:
         print("Using existing folder...")
 
 for item in classes:
-    package_url = "doc/" + item.package.replace(".", "/")
+    package_url = "doc/" + item.package.replace(".", "/") + "/"
     class_name = item.name
     package = item.package
     class_name_type = item.type_ + " " + item.name
     interfaces = str(item.interfaces).replace("[", "").replace("]", "")
     class_declaration = "public " + class_name_type
     class_desc = item.description
+    TODO = "TODO"
+    subclasses = "TODO"
+    implementations = "TODO"
     
-    content = "<!DOCTYPE html><html><head><title>" + class_name + "</title></head><body>"
-    content += "<body><nav><ul><li><a href=\"all_classes.html\">ALL CLASSES</a></li>"
-    content += "<li><a href=\"" + package_url + ">PACKAGE</a></li></ul></nav>"
-    content += "<div id=\"class_summary\"><p id=\"package_declaration\"><strong>Package</strong> <a href=\"" + package_url + "\">" + package + "</a></p>"
-    content += '<p id="classname">' + class_name_type + '</p>'
-    content += 'p id="tree"><ul class="tree"><li>' + TODO + '</ul></ul></p>'
-    content += '<p id="interfaces">All implemented interfaces: ' + interfaces + '</p>'
-    content += '<p id="subclasses">All known subclasses: ' + subclasses + '</p>'
-    content += '<p id="implementations">All known implementations: ' + implementations + '</p></div>'
-    content += '<div id="class"><p id="class_declaration"><pre>' + class_declaration + '</pre></p>'
-    content += '<p id="class_desc">' + class_desc + '</p></div>'
-    content += '<div id="field_summary"><h1>Field Summary</h1><table><tr><th>Modifier and Type</th><th>Name</th><th>Description</th></tr>'
+    content = """<!DOCTYPE html>
+<html>
+<head>
+<title>""" + class_name + """</title>
+<link rel="stylesheet" href="../../../../doc/stylesheet.css">
+</head>
+<body>
+<nav>
+<ul>
+<li>
+<a href=\"all_classes.html\">ALL CLASSES</a></li>
+<li><a href=\"""" + package_url + """\">PACKAGE</a></li>
+</ul>
+</nav>
+<div id=\"class_summary\"><p id=\"package_declaration\"><strong>Package</strong> <a href=\"""" + package_url + """\">""" + package + """</a></p>
+<p id="classname">""" + class_name_type + """</p>
+<p id="tree"><ul class="tree"><li>""" + TODO + """</li></ul></p>
+<p id="interfaces">All implemented interfaces: """ + interfaces + """</p>
+<p id="subclasses">All known subclasses: """ + subclasses + """</p>
+<p id="implementations">All known implementations: """ + implementations + """</p></div>
+<div id="class"><p id="class_declaration"><pre>""" + class_declaration + """</pre></p>
+<p id="class_desc">""" + class_desc + """</p></div>
+<div id="field_summary"><h1>Field Summary</h1><table><tr><th>Modifier and Type</th><th>Name</th><th>Description</th></tr>"""
     for field in item.fields:
-        content += '<tr><th>' + field.accesLevel + ' ' + field.type_ + '</th><th>' + field.name + '</th><th>TODO</th></tr>'
+        content += '<tr><th>' + field.level + ' ' + field.type_ + '</th><th>' + field.name[:-1] + '</th><th>TODO</th></tr>'
     content += '</table></div><div id="constructor_summary"><h1>Constructor Summary</h1><table><tr><th>Constructor</th><th>Description</th></tr>'
     
     content += '<tr><th>' + item.constructor.declaration + '</th><th>' + item.constructor.description + '</th></tr></table></div>'
-
+    content += "<div id=\"method_detail\"><h1>Method Summary</h1><table><tr><th>Modifier and Type</th><th>Name</th><th>Description</th>"
     for method in item.methods:
         content += "<tr><th>" + method.accessLevel + " " + method.returnType + "</th><th>" + method.name + "</th><th>" + method.description + "</th></tr>"
     
+    content += """
+</table>
+</div>
+</body>
+</html>"""
+
     with open(package_url + class_name + ".html", "w") as f:
         f.write(content)

@@ -1,0 +1,33 @@
+body {
+    background: #DDD;
+    font-family: sans-serif;
+    font-size: 70%;
+}
+
+th {
+    border: 1px solid black;
+    font-style: normal;
+}
+
+nav ul li {
+    list-style-type: none;
+    display:inline;
+    border: 1px solid black;
+    color: #A00;
+    font-style: normal;
+}
+
+nav a {
+    color: red;
+}
+
+nav {
+    background: #333;
+    color: #A00;
+}
+
+div {
+    background: #999;
+    margin: 4px;
+    /*padding: 2px;*/
+}

@@ -145,13 +145,13 @@ for item in classes:
     content += '<p id="class_desc">' + class_desc + '</p></div>'
     content += '<div id="field_summary"><h1>Field Summary</h1><table><tr><th>Modifier and Type</th><th>Name</th><th>Description</th></tr>'
     for field in item.fields:
-        content += '<tr><th>' + field.accesLevel + ' ' + field.type_ + '</th><th>' + field.name + '</th><th>TODO</th></tr>'
+        content += '<tr><td>' + field.accesLevel + ' ' + field.type_ + '</td><td>' + field.name + '</td><td>TODO</td></tr>'
+        
     content += '</table></div><div id="constructor_summary"><h1>Constructor Summary</h1><table><tr><th>Constructor</th><th>Description</th></tr>'
-    
-    content += '<tr><th>' + item.constructor.declaration + '</th><th>' + item.constructor.description + '</th></tr></table></div>'
+    content += '<tr><td>' + item.constructor.declaration + '</td><td>' + item.constructor.description + '</td></tr></table></div>'
 
     for method in item.methods:
-        content += "<tr><th>" + method.accessLevel + " " + method.returnType + "</th><th>" + method.name + "</th><th>" + method.description + "</th></tr>"
+        content += "<tr><td>" + method.accessLevel + " " + method.returnType + "</td><td>" + method.name + "</td><td>" + method.description + "</td></tr>"
     
     with open(package_url + class_name + ".html", "w") as f:
         f.write(content)

@@ -158,7 +158,7 @@ for item in classes:
 </ul>
 </nav>
 <div id=\"class_summary\"><p id=\"package_declaration\"><strong>Package</strong> <a href=\"""" + package_url + """\">""" + package + """</a></p>
-<p id="classname">""" + class_name_type + """</p>
+<h1 id="classname">""" + class_name_type + """</h1>
 <p id="tree"><ul class="tree"><li>""" + TODO + """</li></ul></p>
 <p id="interfaces">All implemented interfaces: """ + interfaces + """</p>
 <p id="subclasses">All known subclasses: """ + subclasses + """</p>

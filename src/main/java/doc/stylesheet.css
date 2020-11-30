@@ -1,7 +1,6 @@
 body {
     background: #DDD;
     font-family: sans-serif;
-    font-size: 70%;
 }
 
 th {
@@ -12,22 +11,23 @@ th {
 nav ul li {
     list-style-type: none;
     display:inline;
-    border: 1px solid black;
-    color: #A00;
     font-style: normal;
+    padding-right: 8px;
 }
 
 nav a {
-    color: red;
+    color: rgb(240, 46, 46);
 }
 
 nav {
     background: #333;
-    color: #A00;
+    padding: 2px;
 }
 
 div {
     background: #999;
     margin: 4px;
-    /*padding: 2px;*/
+    border: 2px solid black;
+    padding: 2px;
+    padding-left: 8px;
 }

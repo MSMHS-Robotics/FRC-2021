@@ -2,25 +2,61 @@
 <html>
 <head>
 <title>Shooter</title>
-<link rel="stylesheet" href="../../../../doc/stylesheet.css">
+<link rel="stylesheet" href="../../../stylesheet.css">
 </head>
 <body>
 <nav>
 <ul>
 <li>
-<a href="all_classes.html">ALL CLASSES</a></li>
+<a href=../../../allClasses.html>ALL CLASSES</a></li>
 <li><a href="doc/frc/robot/subsystems/">PACKAGE</a></li>
 </ul>
 </nav>
 <div id="class_summary"><p id="package_declaration"><strong>Package</strong> <a href="doc/frc/robot/subsystems/">frc.robot.subsystems</a></p>
-<p id="classname">class Shooter</p>
+<h1 id="classname">class Shooter</h1>
 <p id="tree"><ul class="tree"><li>TODO</li></ul></p>
 <p id="interfaces">All implemented interfaces:  SubsystemBase </p>
 <p id="subclasses">All known subclasses: TODO</p>
 <p id="implementations">All known implementations: TODO</p></div>
-<div id="class"><p id="class_declaration"><pre>public class Shooter</pre></p>
-<p id="class_desc">TODO</p></div>
-<div id="field_summary"><h1>Field Summary</h1><table><tr><th>Modifier and Type</th><th>Name</th><th>Description</th></tr><tr><th>private RocketMotor</th><th>shooterMotor</th><th>TODO</th></tr><tr><th>private RocketMotor</th><th>shooterFollowerMotor</th><th>TODO</th></tr><tr><th>private RocketMotor</th><th>triggerMotor</th><th>TODO</th></tr><tr><th>private RocketCANEncoderInterface</th><th>shooterEncoder</th><th>TODO</th></tr><tr><th>private Boolean</th><th>isIdling</th><th>TODO</th></tr><tr><th>private PIDController</th><th>shooterPID</th><th>TODO</th></tr><tr><th>private ShuffleboardTab</th><th>tab</th><th>TODO</th></tr><tr><th>private NetworkTableEntry</th><th>sb_status</th><th>TODO</th></tr><tr><th>private NetworkTableEntry</th><th>sb_rpm</th><th>TODO</th></tr><tr><th>private NetworkTableEntry</th><th>sb_desiredRPM</th><th>TODO</th></tr><tr><th>private NetworkTableEntry</th><th>sb_preset_layup</th><th>TODO</th></tr><tr><th>private NetworkTableEntry</th><th>sb_preset_line</th><th>TODO</th></tr><tr><th>private NetworkTableEntry</th><th>sb_preset_trench</th><th>TODO</th></tr><tr><th>private NetworkTableEntry</th><th>sb_preset_max</th><th>TODO</th></tr><tr><th>private NetworkTableEntry</th><th>debugButton</th><th>TODO</th></tr></table></div><div id="constructor_summary"><h1>Constructor Summary</h1><table><tr><th>Constructor</th><th>Description</th></tr><tr><th>TODO</th><th>TODO</th></tr></table></div><div id="method_detail"><h1>Method Summary</h1><table><tr><th>Modifier and Type</th><th>Name</th><th>Description</th><tr><th>public void</th><th>setTrigger</th><th>comments currently not implemented</th></tr><tr><th>public double</th><th>getTriggerSpeed</th><th>comments currently not implemented</th></tr><tr><th>public void</th><th>setIdle</th><th>comments currently not implemented</th></tr><tr><th>public void</th><th>reset</th><th>comments currently not implemented</th></tr><tr><th>public boolean</th><th>warmUp</th><th>comments currently not implemented</th></tr><tr><th>public boolean</th><th>isGood</th><th>comments currently not implemented</th></tr><tr><th>public void</th><th>periodic</th><th>comments currently not implemented</th></tr>
+<div id="class">
+<p id="class_declaration">
+<pre>public class Shooter</pre>
+</p>
+<p id="class_desc">
+TODO</p>
+</div>
+<div id="field_summary">
+<h1>Field Summary</h1>
+<table>
+<tr><th>Modifier and Type</th><th>Name</th><th>Description</th></tr>
+<tr><th>private RocketMotor</th><th>shooterMotor</th><th>TODO</th></tr>
+<tr><th>private RocketMotor</th><th>shooterFollowerMotor</th><th>TODO</th></tr>
+<tr><th>private RocketMotor</th><th>triggerMotor</th><th>TODO</th></tr>
+<tr><th>private RocketCANEncoderInterface</th><th>shooterEncoder</th><th>TODO</th></tr>
+<tr><th>private Boolean</th><th>isIdling</th><th>TODO</th></tr>
+<tr><th>private PIDController</th><th>shooterPID</th><th>TODO</th></tr>
+<tr><th>private ShuffleboardTab</th><th>tab</th><th>TODO</th></tr>
+<tr><th>private NetworkTableEntry</th><th>sb_status</th><th>TODO</th></tr>
+<tr><th>private NetworkTableEntry</th><th>sb_rpm</th><th>TODO</th></tr>
+<tr><th>private NetworkTableEntry</th><th>sb_desiredRPM</th><th>TODO</th></tr>
+<tr><th>private NetworkTableEntry</th><th>sb_preset_layup</th><th>TODO</th></tr>
+<tr><th>private NetworkTableEntry</th><th>sb_preset_line</th><th>TODO</th></tr>
+<tr><th>private NetworkTableEntry</th><th>sb_preset_trench</th><th>TODO</th></tr>
+<tr><th>private NetworkTableEntry</th><th>sb_preset_max</th><th>TODO</th></tr>
+<tr><th>private NetworkTableEntry</th><th>debugButton</th><th>TODO</th></tr>
+</table></div><div id="constructor_summary"><h1>Constructor Summary</h1><table><tr><th>Constructor</th><th>Description</th></tr>
+<tr><th>TODO</th><th>TODO</th></tr></table></div><div id="method_detail">
+<h1>Method Summary</h1>
+<table>
+<tr><th>Modifier and Type</th><th>Name</th><th>Description</th>
+<tr><th>public void</th><th>setTrigger</th><th>comments currently not implemented</th></tr>
+<tr><th>public double</th><th>getTriggerSpeed</th><th>comments currently not implemented</th></tr>
+<tr><th>public void</th><th>setIdle</th><th>comments currently not implemented</th></tr>
+<tr><th>public void</th><th>reset</th><th>comments currently not implemented</th></tr>
+<tr><th>public boolean</th><th>warmUp</th><th>comments currently not implemented</th></tr>
+<tr><th>public boolean</th><th>isGood</th><th>comments currently not implemented</th></tr>
+<tr><th>public void</th><th>periodic</th><th>comments currently not implemented</th></tr>
+
 </table>
 </div>
 </body>

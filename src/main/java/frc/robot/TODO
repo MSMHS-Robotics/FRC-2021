@@ -5,3 +5,14 @@ Todo (1):
  * make it so you put distances in inches instead of ticks (add some kind of internal conversion)
  * make auto chooser
  * make a shoot() command
+ * make documentation better
+    * make stylesheet apply to everything !! DONE
+    * add in comments
+    * make a detail section in addition to the overview section
+    * do the subclasses bit
+    * do the implementations bit
+    * do the implements bit
+    * actually do the constructor
+    * make the "all classes" page DONE !!
+    * make the "package" page
+ * actually add testing

@@ -1,4 +1,11 @@
-import os, re
+import os, re, time
+
+
+# DISCLAIMER:
+# I don't know who wrote this (probably me) but it's ugly
+# I don't remember writing this like this
+# lol this is trash
+# *The author is not responsible for any brain damage caused by reading this code*
 
 class JavaFile:
     def __init__(self, path, name):
@@ -64,6 +71,7 @@ def walk():
             file_list[dirpath] = files
     return file_list
 
+lastTime = time.time()
 result = walk()
 fileList = []
 for path, files in result.items():
@@ -71,14 +79,17 @@ for path, files in result.items():
         fileList.append(JavaFile(path, file))
 
 classes = []
-CLASS_RE = re.compile(r"(public|private|protected) (class|interface) (.+?) ((implements|extends|)(.*))\{") # 1st group is access level, 2nd is type (class/interface), 3rd is class name, 4th is inheritance (either implements/extends), 5th is what it implements or extends
+CLASS_RE = re.compile(r"(public|private|protected) (class|interface) (.+?) ((implements|extends|)(.*))\{") # 1st grouFalsp is access level, 2nd is type (class/interface), 3rd is class name, 4th is inheritance (either implements/extends), 5th is what it implements or extends
 PACKAGE_RE = re.compile(r"(?<=package ).*(?=\;)", re.M)
 METHOD_RE = re.compile(r"(private|public) ([A-z]+?) ([A-z]+?(?=\())(.+(?=\) \{))", re.M) # group 1 is access, group 2 is return type, group 3 is name, group 4 is parameters
 FIELD_RE = re.compile(r"(private|public) ([A-z]+) (\w+\;|\w+ (?==))", re.M) # group 1 is access, group 2 type, group 3 name (need to strip the last char off of group 3)
 INTERFACE_RE = re.compile(r"(?<=implements ).+(?= \{)") # this can't handle multiple implements, so kinda jank for now
 for javaFile in fileList[2:]:
-    with open(javaFile.path[2:] + "/" + javaFile.name) as f:
-        content = f.read()
+    try:
+        with open(javaFile.path[2:] + "/" + javaFile.name) as f:
+            content = f.read()
+    except Exception:
+        continue
     try:
         # 0 is level; 1 is type; 2 is name; igore 3; 4 is extends/implements; 5 is whatever is being implemented
         # make sure to strip(). Format is a list containting a single tuple containing the strings
@@ -117,7 +128,15 @@ for javaFile in fileList[2:]:
             fields.append(Field(field_name, field_type, field_level)) # change below so we separate parents and interfaces
         classes.append(JavaClass(class_name, package_match[0], class_type, methods, fields, class_match[0][5], class_match[0][5]))
     except Exception as e:
-        print("Error ocurred while parsing: " + javaFile.name)
+        careAbout = True
+
+        for i in ["csv", "html", "TODO", "css", "txt", "py"]:
+            if i in javaFile.name:
+                careAbout = False
+                break
+
+        if careAbout:
+            print("Error ocurred while parsing: " + javaFile.name)
 
 # data has been processed and packaged. Now we need to generate html
 #os.makedirs("doc/frc/robot/subsystems") # this works
@@ -129,8 +148,11 @@ for item in classes:
     try:
         os.makedirs("doc/" + item.package.replace(".", "/"))
     except FileExistsError:
-        print("Using existing folder...")
+        #print("Using existing folder...")
+        continue
 
+
+allFileLinks = {}
 for item in classes:
     package_url = "doc/" + item.package.replace(".", "/") + "/"
     class_name = item.name
@@ -142,18 +164,20 @@ for item in classes:
     TODO = "TODO"
     subclasses = "TODO"
     implementations = "TODO"
+    depth = package_url.count("/") - 1 # HA! this actually worked first try and I didn't even know what I was doing!
+    allFileLinks[class_name] = package_url[3:] # dang this is ugly
     
     content = """<!DOCTYPE html>
 <html>
 <head>
 <title>""" + class_name + """</title>
-<link rel="stylesheet" href="../../../../doc/stylesheet.css">
+<link rel="stylesheet" href=\"""" + "../" * depth + """stylesheet.css">
 </head>
 <body>
 <nav>
 <ul>
 <li>
-<a href=\"all_classes.html\">ALL CLASSES</a></li>
+<a href=""" + "../" * depth + """allClasses.html>ALL CLASSES</a></li>
 <li><a href=\"""" + package_url + """\">PACKAGE</a></li>
 </ul>
 </nav>
@@ -163,17 +187,26 @@ for item in classes:
 <p id="interfaces">All implemented interfaces: """ + interfaces + """</p>
 <p id="subclasses">All known subclasses: """ + subclasses + """</p>
 <p id="implementations">All known implementations: """ + implementations + """</p></div>
-<div id="class"><p id="class_declaration"><pre>""" + class_declaration + """</pre></p>
-<p id="class_desc">""" + class_desc + """</p></div>
-<div id="field_summary"><h1>Field Summary</h1><table><tr><th>Modifier and Type</th><th>Name</th><th>Description</th></tr>"""
+<div id="class">
+<p id="class_declaration">
+<pre>""" + class_declaration + """</pre>
+</p>
+<p id="class_desc">
+""" + class_desc + """</p>
+</div>
+<div id="field_summary">
+<h1>Field Summary</h1>
+<table>
+<tr><th>Modifier and Type</th><th>Name</th><th>Description</th></tr>
+"""
     for field in item.fields:
-        content += '<tr><th>' + field.level + ' ' + field.type_ + '</th><th>' + field.name[:-1] + '</th><th>TODO</th></tr>'
-    content += '</table></div><div id="constructor_summary"><h1>Constructor Summary</h1><table><tr><th>Constructor</th><th>Description</th></tr>'
+        content += '<tr><th>' + field.level + ' ' + field.type_ + '</th><th>' + field.name[:-1] + '</th><th>TODO</th></tr>\n'
+    content += '</table></div><div id="constructor_summary"><h1>Constructor Summary</h1><table><tr><th>Constructor</th><th>Description</th></tr>\n'
     
     content += '<tr><th>' + item.constructor.declaration + '</th><th>' + item.constructor.description + '</th></tr></table></div>'
-    content += "<div id=\"method_detail\"><h1>Method Summary</h1><table><tr><th>Modifier and Type</th><th>Name</th><th>Description</th>"
+    content += "<div id=\"method_detail\">\n<h1>Method Summary</h1>\n<table>\n<tr><th>Modifier and Type</th><th>Name</th><th>Description</th>\n"
     for method in item.methods:
-        content += "<tr><th>" + method.accessLevel + " " + method.returnType + "</th><th>" + method.name + "</th><th>" + method.description + "</th></tr>"
+        content += "<tr><th>" + method.accessLevel + " " + method.returnType + "</th><th>" + method.name + "</th><th>" + method.description + "</th></tr>\n"
     
     content += """
 </table>
@@ -183,3 +216,27 @@ for item in classes:
 
     with open(package_url + class_name + ".html", "w") as f:
         f.write(content)
+
+
+with open("doc/allClasses.html", "w") as f:
+    content = """<!DOCTYPE html>
+<html>
+<head>
+    <title>All Classes</title>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+<h1>ALL CLASSES</h1>
+<div id="class_summary">
+<ul>
+"""
+    for key, value in allFileLinks.items():
+        content += '<li><a href="' + value[1:] + key + ".html" + '">' + key + '</a></li>\n'
+    content += """
+</ul>
+</div>
+</body>
+</html>
+    """
+    f.write(content)
+print("Time taken: " + str(round(time.time() - lastTime, 2)) + " seconds")

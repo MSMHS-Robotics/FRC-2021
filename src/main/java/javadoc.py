@@ -118,7 +118,7 @@ for javaFile in fileList[2:]:
                 param = param.split(" ")
                 if param != [""]:
                     method_params.append(Parameter(param[1], param[0]))
-            methods.append(Method(method_name, class_name, method_level, method_type, method_params, "comments currently not implemented"))
+            methods.append(Method(method_name, class_name, method_level, method_type, method_params, "TODO"))
 
         fields = []
         for field in field_match:
@@ -200,17 +200,20 @@ for item in classes:
 <tr><th>Modifier and Type</th><th>Name</th><th>Description</th></tr>
 """
     for field in item.fields:
-        content += '<tr><th>' + field.level + ' ' + field.type_ + '</th><th>' + field.name[:-1] + '</th><th>TODO</th></tr>\n'
+        content += '<tr><td>' + field.level + ' ' + field.type_ + '</td><td>' + field.name[:-1] + '</td><td>TODO</td></tr>\n'
     content += '</table></div><div id="constructor_summary"><h1>Constructor Summary</h1><table><tr><th>Constructor</th><th>Description</th></tr>\n'
     
-    content += '<tr><th>' + item.constructor.declaration + '</th><th>' + item.constructor.description + '</th></tr></table></div>'
+    content += '<tr><td>' + item.constructor.declaration + '</td><td>' + item.constructor.description + '</td></tr></table></div>'
     content += "<div id=\"method_detail\">\n<h1>Method Summary</h1>\n<table>\n<tr><th>Modifier and Type</th><th>Name</th><th>Description</th>\n"
     for method in item.methods:
-        content += "<tr><th>" + method.accessLevel + " " + method.returnType + "</th><th>" + method.name + "</th><th>" + method.description + "</th></tr>\n"
+        content += "<tr><td>" + method.accessLevel + " " + method.returnType + "</td><td>" + method.name + "</td><td>" + method.description + "</td></tr>\n"
     
     content += """
 </table>
 </div>
+<footer>
+<p id="time">Documentation last built: """ + time.strftime("%b %d, %Y") + """</p>
+</footer>
 </body>
 </html>"""
 
